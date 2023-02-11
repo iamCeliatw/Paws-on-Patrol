@@ -35,10 +35,12 @@ const UserBox = ({ userPopups, userImage }) => {
           <p>{userAddress}</p>
         </div>
         <p>{userPrice}</p>
-        <ButtonDiv>
-          <button onClick={openChat}>聊一聊</button>
-          <button>查看</button>
-        </ButtonDiv>
+        {user && (
+          <ButtonDiv>
+            <button onClick={openChat}>聊一聊</button>
+            <button>查看</button>
+          </ButtonDiv>
+        )}
       </StyledUserBox>
     </StyledBox>
   ) : (
@@ -80,8 +82,10 @@ const StyledUserBox = styled.div`
     border-bottom: none;
   }
   img {
-    width: 50%;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
+    object-fit: cover;
   }
 `;
 

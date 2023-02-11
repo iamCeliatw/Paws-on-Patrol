@@ -27,6 +27,7 @@ function Map({
   userPopups,
   userImage,
   mapId,
+  userDetail,
 }) {
   useEffect(() => {
     getAllLocation();
@@ -34,7 +35,7 @@ function Map({
 
   return isLoaded ? (
     <StyledMap>
-      <UserBox userImage={userImage} userPopups={userPopups} />
+      {userDetail && <UserBox userImage={userImage} userPopups={userPopups} />}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

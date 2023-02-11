@@ -1,6 +1,5 @@
 // 這個檔案是deploy到 firebase function
 // 再從react use function 串接第三方金流
-
 const functions = require("firebase-functions");
 exports.createStripeCheckout = functions.https.onCall(async (data, context) => {
   //Stripe init

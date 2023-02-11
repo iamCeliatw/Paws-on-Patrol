@@ -28,7 +28,7 @@ const Homepage = () => {
   const [userImage, setUserImage] = useState("");
   const { user, searchUser, setSearchUser } = UserAuth();
   //   const query = collection(db, "users");
-  const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
+  const ApiKey = "";
   const mapId = ["df9fc52cd73ef254"];
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: ApiKey,
@@ -73,8 +73,9 @@ const Homepage = () => {
       });
     });
   };
-
+  const [userDetail, setUserDetail] = useState(false);
   const getClickedUser = async (marker, e) => {
+    setUserDetail(true);
     setCenter(e.latLng);
     // console.log(e.latLng);
     const querySnapshot = await getDocs(collection(db, "user"));
@@ -115,6 +116,7 @@ const Homepage = () => {
         />
 
         <Map
+          userDetail={userDetail}
           userImage={userImage}
           userPopups={userPopups}
           getClickedUser={getClickedUser}

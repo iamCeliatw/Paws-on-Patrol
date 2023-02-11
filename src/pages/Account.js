@@ -42,7 +42,7 @@ const Account = () => {
   //     }
   //   }, [photoUpload]);
 
-  const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
+  const ApiKey = "";
   const { user, marker, setMarker } = UserAuth();
   const [nameValue, setNameValue] = useState("");
   const [aboutMeText, setaboutMeText] = useState("");
@@ -58,6 +58,11 @@ const Account = () => {
   const [getAddress, setGetAddress] = useState(false);
   //diary
   const [diaries, setDiaries] = useState([
+    {
+      photo: null,
+      title: null,
+      text: null,
+    },
     {
       photo: null,
       title: null,
@@ -160,7 +165,17 @@ const Account = () => {
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${ApiKey}`
         );
         const data = await response.json();
-        setAddressValue(data.results[0].formatted_address);
+
+        if (
+          data.results &&
+          data.results.length > 0 &&
+          data.results[0].formatted_address
+        ) {
+          setAddressValue(data.results[0].formatted_address);
+        } else {
+          console.error("API did not return expected results");
+        }
+        // setAddressValue(data.results[0].formatted_address);
         setGetAddress(false);
       });
     } catch (e) {
@@ -195,7 +210,7 @@ const Account = () => {
       setPriceValue(userdata.price);
       setaboutMeText(userdata.aboutme);
       setProfileImage(userdata.profileURL);
-      setDiaries(userdata.diary);
+      setDiaries(userdata.diary || "");
     }
   };
 
@@ -340,26 +355,27 @@ const Account = () => {
           ></InputTextArea>
         </StyledDiv>
         <Title>我的保姆日記</Title>
-        {diaries &&
-          diaries.map((diary, i) => (
-            <Diary
-              i={i}
-              key={i}
-              diary={diary}
-              diaries={diaries}
-              setDiaries={setDiaries}
-              handleDelete={handleDelete}
-              photoURL={photoURL}
-              setPhotoURL={setPhotoURL}
-              // getDiaryPhoto={getDiaryPhoto}
-              mypreview={mypreview}
-              setMyPreview={setMyPreview}
-              photoUpload={photoUpload}
-              setPhotoUpload={setPhotoUpload}
-              // diaryLoad={diaryLoad}
-              // setDiaryLoad=
-            />
-          ))}
+        {diaries
+          ? diaries.map((diary, i) => (
+              <Diary
+                i={i}
+                key={i}
+                diary={diary}
+                diaries={diaries}
+                setDiaries={setDiaries}
+                handleDelete={handleDelete}
+                photoURL={photoURL}
+                setPhotoURL={setPhotoURL}
+                // getDiaryPhoto={getDiaryPhoto}
+                mypreview={mypreview}
+                setMyPreview={setMyPreview}
+                photoUpload={photoUpload}
+                setPhotoUpload={setPhotoUpload}
+                // diaryLoad={diaryLoad}
+                // setDiaryLoad=
+              />
+            ))
+          : ""}
         <button onClick={handleAddDiary} className="diaryButton">
           新增日記
         </button>
