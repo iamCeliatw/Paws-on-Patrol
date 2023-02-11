@@ -42,7 +42,7 @@ const Account = () => {
   //     }
   //   }, [photoUpload]);
 
-  const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
+  const ApiKey = "";
   const { user, marker, setMarker } = UserAuth();
   const [nameValue, setNameValue] = useState("");
   const [aboutMeText, setaboutMeText] = useState("");
