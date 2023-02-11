@@ -28,7 +28,7 @@ const Homepage = () => {
   const [userImage, setUserImage] = useState("");
   const { user, searchUser, setSearchUser } = UserAuth();
   //   const query = collection(db, "users");
-  const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
+  const ApiKey = "";
   const mapId = ["df9fc52cd73ef254"];
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: ApiKey,
