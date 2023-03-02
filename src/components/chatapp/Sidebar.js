@@ -7,7 +7,7 @@ const Sidebar = () => {
   return (
     <Container>
       <Navbar />
-      <Search />
+      {/* <Search /> */}
       <Chats />
     </Container>
   );
@@ -17,6 +17,6 @@ export default Sidebar;
 
 const Container = styled.div`
   flex: 1;
-  border-right: 1px solid #3e3c61;
-  background-color: #3e3c61;
+  border-right: 1px solid #fff5ef;
+  background-color: #dba39a;
 `;

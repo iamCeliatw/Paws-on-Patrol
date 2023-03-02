@@ -14,21 +14,27 @@ import { ref, getDownloadURL } from "firebase/storage";
 import Loader from "../components/Loader";
 
 const Homepage = () => {
+  const [isActive, setIsActive] = useState(false);
   const [km, setKm] = useState("");
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
   const [closeModal, setCloseModal] = useState(true);
-  const [priceValue, setPriceValue] = useState(200);
-  const [location, setLocation] = useState(null);
-  const [center, setCenter] = useState("");
+  const [priceValue, setPriceValue] = useState(400);
+  const formattedPrice = `$${priceValue}`;
+  const [center, setCenter] = useState({ lat: 25, lng: 121 });
   const [mapLoading, setMapLoading] = useState(true);
   const [markers, setMarkers] = useState([]);
   //userBox內容
   const [userPopups, setUserPopups] = useState([]);
   const [userImage, setUserImage] = useState("");
-  const { user, searchUser, setSearchUser } = UserAuth();
-  //   const query = collection(db, "users");
-  const ApiKey = "";
+  const [userData, setUserData] = useState("");
+  const [imgLoading, setImgLoading] = useState(true);
+
+  const { user, setSearchUser, userselectOpen, setUserselectOpen, openInfo } =
+    UserAuth();
+
+  const [openFilterBar, setOpenFilterBar] = useState(false);
+
   const mapId = ["df9fc52cd73ef254"];
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: ApiKey,
@@ -42,61 +48,149 @@ const Homepage = () => {
     setPriceValue(event.target.value);
   };
 
-  //   const handleSubmit = async () => {
-  //     const response = await fetch(
-  //       `https://maps.googleapis.com/maps/api/geocode/json?address=${mapInputValue}&key=${ApiKey}`
-  //     );
-  //     const data = await response.json();
-  //     const { lat, lng } = data.results[0].geometry.location;
-  //     setCenter({ lat, lng });
-  //   };
+  //   根據填入地址 定位經緯度
+  const locationHandler = async () => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${mapInputValue}&key=${ApiKey}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const { lat, lng } = data.results[0].geometry.location;
+          setCenter({ lat, lng });
+          resolve();
+        })
+        .catch((e) => {
+          alert(`取得地理位置失敗：${e.message}`);
+          reject(e);
+        });
+    });
+  };
+
   //取得現在位置
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLocation(position);
-        setCenter({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-        setMapLoading(false);
-      },
-      (error) => console.log(error)
-    );
+    const getCurrentPosition = () => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCenter({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+          setMapLoading(false);
+        },
+        (error) => {
+          setMapLoading(false);
+          setCenter({ lat: 25.0249141, lng: 121.4869647 });
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              alert("您尚未開啟定位，若要找尋附近使用者請開啟定位並重整頁面。");
+              break;
+            case error.POSITION_UNAVAILABLE:
+              alert("無法取得您的所在地點，請重新整理頁面。");
+              break;
+            case error.TIMEOUT:
+              alert("請求逾時，請重新整理頁面。");
+              break;
+            default:
+              alert("An unknown error occurred.");
+              break;
+          }
+        }
+      );
+    };
+    getCurrentPosition();
   }, []);
-  //取得所有用戶位置
-  const getAllLocation = async () => {
-    const querySnapshot = await getDocs(collection(db, "user"));
-    querySnapshot.forEach((doc) => {
-      setMarkers((prevMarkers) => {
-        return [...prevMarkers, doc.data().place];
-      });
-    });
-  };
-  const [userDetail, setUserDetail] = useState(false);
-  const getClickedUser = async (marker, e) => {
-    setUserDetail(true);
-    setCenter(e.latLng);
-    // console.log(e.latLng);
-    const querySnapshot = await getDocs(collection(db, "user"));
-    querySnapshot.forEach((doc) => {
-      const clickedIcon = doc.data().place;
-      if (marker.lng === clickedIcon.lng) {
-        console.log(doc.data());
-        setUserPopups(doc.data());
-        setSearchUser(doc.data());
-        const userImg = doc.data().uid;
-        const imageRef = ref(storage, `${userImg}/profile`);
-        getDownloadURL(imageRef).then((url) => {
-          setUserImage((prev) => [...prev, url]);
-          setUserImage(url);
+
+  useEffect(() => {
+    const getAllLocation = async () => {
+      const querySnapshot = await getDocs(collection(db, "user"));
+      const data = [];
+      const newMarkers = []; // 儲存符合條件的 markers
+      if (user) {
+        querySnapshot.forEach((doc) => {
+          if (
+            user &&
+            doc.data().uid !== user.uid &&
+            doc.data().place &&
+            doc.data().price
+          ) {
+            data.push(doc.data());
+            const filterPrice = parseInt(
+              doc.data().price.replace(/[^0-9]/gi, ""),
+              10
+            );
+            if (priceValue >= filterPrice) {
+              newMarkers.push(doc.data().place);
+            }
+          }
+        });
+      } else {
+        querySnapshot.forEach((doc) => {
+          if (doc.data().place && doc.data().price) {
+            data.push(doc.data());
+            const filterPrice = parseInt(
+              doc.data().price.replace(/[^0-9]/gi, ""),
+              10
+            );
+            if (priceValue >= filterPrice) {
+              newMarkers.push(doc.data().place);
+            }
+          }
         });
       }
+      if (!km) {
+        setMarkers(newMarkers); // 更新 markers 狀態
+      } else {
+        // console.log(km);
+        setMarkers(filterUsers(newMarkers, km, priceValue));
+      }
+      setUserData(data);
+    };
+    getAllLocation();
+  }, [priceValue, user, km, center]);
+
+  const filterUsers = (newMarkers, km, priceValue) => {
+    return newMarkers.filter((marker) => {
+      // 計算用戶與當前位置的距離
+      // 假設 currentLocation 是當前的位置
+      const userLocation = new window.google.maps.LatLng(
+        marker.lat,
+        marker.lng
+      );
+      const distance =
+        window.google.maps.geometry.spherical.computeDistanceBetween(
+          center,
+          userLocation
+        );
+      if (distance <= km) {
+        return true;
+      }
+      return false;
     });
   };
-  console.log(center);
-  if (loadError) return "Error";
-  if (!isLoaded || mapLoading)
+
+  const getClickedUser = async (marker, e) => {
+    setIsActive(true);
+    setImgLoading(true);
+    const clickedUser = userData.find((user) => user.place.lng === marker.lng);
+    if (clickedUser) {
+      setUserPopups(clickedUser);
+      setSearchUser(clickedUser);
+      const userImg = clickedUser.uid;
+      const imageRef = ref(storage, `${userImg}/profile`);
+      getDownloadURL(imageRef)
+        .then((url) => {
+          setUserImage(url);
+          setImgLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching image:", error);
+          setUserImage("");
+          setImgLoading(false);
+        });
+    }
+  };
+  if (mapLoading)
     return (
       <div>
         <Loader />
@@ -108,17 +202,23 @@ const Homepage = () => {
       <OverLay openLogin={openLogin} openSignup={openSignup}></OverLay>
       <div style={{ position: "relative" }}>
         <Nav
+          userselectOpen={userselectOpen}
+          setUserselectOpen={setUserselectOpen}
           openLogin={openLogin}
           closeModal={closeModal}
           setCloseModal={setCloseModal}
           setOpenSignup={setOpenSignup}
           setOpenLogin={setOpenLogin}
         />
-
         <Map
-          userDetail={userDetail}
+          imgLoading={imgLoading}
+          isActive={isActive}
+          setIsActive={setIsActive}
+          priceValue={priceValue}
+          setPriceValue={setPriceValue}
           userImage={userImage}
           userPopups={userPopups}
+          setUserPopups={setUserPopups}
           getClickedUser={getClickedUser}
           km={km}
           markers={markers}
@@ -130,14 +230,16 @@ const Homepage = () => {
           ApiKey={ApiKey}
           mapInputValue={mapInputValue}
           google={window.google}
-          getAllLocation={getAllLocation}
         />
         <LeftSideBar
+          openFilterBar={openFilterBar}
+          setOpenFilterBar={setOpenFilterBar}
+          mapInputValue={mapInputValue}
+          setMapInputValue={setMapInputValue}
+          locationHandler={locationHandler}
           handlePriceChange={handlePriceChange}
+          formattedPrice={formattedPrice}
           priceValue={priceValue}
-          min={200}
-          max={400}
-          step={100}
           km={km}
           setKm={setKm}
         />
@@ -170,8 +272,9 @@ const Homepage = () => {
           setOpenLogin(true);
         }}
       />
-      {/* )} */}
-      <HomeFooter>Copyright © Paws on Patrol 2023 </HomeFooter>
+      <HomeFooter>
+        Copyright © 2023 Paws on Patrol. All rights reserved.
+      </HomeFooter>
     </>
   );
 };

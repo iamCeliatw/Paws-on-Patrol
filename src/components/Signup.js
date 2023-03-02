@@ -2,8 +2,12 @@ import { async } from "@firebase/util";
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import { SignButton } from "../styles/Button.styled";
-import { StyledLogin, Container, Landing } from "../styles/Login.styled";
+import {
+  StyledLogin,
+  Container,
+  SignButton,
+  ErrorMessage,
+} from "../styles/Login.styled";
 import { FcGoogle } from "react-icons/fc";
 import { db } from "../firebase.config";
 import { collection, addDoc, setDoc, doc } from "@firebase/firestore";
@@ -13,19 +17,29 @@ const Signup = ({ onSwitch, onClose, openSignup, setOpenSignup }) => {
   const style = { fontSize: "1.2em", verticalAlign: "sub" };
   const [signUpName, setSignUpName] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
   const [signUpPassword, setSignUpPassword] = useState("");
-  const [error, setError] = useState(false);
-  const { user, createUser, setIsLogin, currentUserId, setCurrentUserId } =
-    UserAuth();
+  const {
+    user,
+    createUser,
+    setIsLogin,
+    currentUserId,
+    setCurrentUserId,
+    errorMessage,
+    setErrorMessage,
+  } = UserAuth();
   const navigate = useNavigate();
   const registerHandler = async () => {
+    if (!signUpName || !signUpEmail || !signUpPassword) {
+      setShowMessage(true);
+      setErrorMessage("請輸入完整資訊");
+      return;
+    }
     try {
       const createdUser = await createUser(signUpEmail, signUpPassword);
-
       setOpenSignup(false);
       setIsLogin(true);
       if (createdUser) {
-        // console.log("c", createdUser);
         updateProfile(createdUser.user, { displayName: signUpName });
         const userId = createdUser.user.uid;
         setDoc(doc(db, "user", userId), {
@@ -36,34 +50,32 @@ const Signup = ({ onSwitch, onClose, openSignup, setOpenSignup }) => {
       }
       navigate("/account");
     } catch (e) {
-      setError(true);
-      alert(e.message);
+      setShowMessage(true);
+      let errorCode = e.code.split("auth/")[1];
+      switch (errorCode) {
+        case "email-already-in-use":
+          setErrorMessage("此信箱已被使用");
+          break;
+        case "invalid-email":
+          setErrorMessage("請輸入正確的email");
+          break;
+        case "weak-password":
+          setErrorMessage("密碼需大於6個字元");
+          break;
+        default:
+          setErrorMessage("註冊失敗");
+          break;
+      }
     }
   };
-
-  //   if (userId) {
-  //     await setDoc(doc(db, "user", userId), {
-  //       detail: {
-  //         name: nameValue,
-  //         price: null,
-  //         place: null,
-  //       },
-  //     });
-
-  //   useEffect(() => {
-  //     if (user !== null) {
-  //       // User is signed in.
-  //       const userId = user.id;
-  //       addDoc(collection(db, "users", userId), {
-  //         name: signUpName,
-  //         email: signUpEmail,
-  //         password: signUpPassword,
-  //       });
-  //     } else {
-  //       // No user is signed in.
-  //       console.log("No user is signed in.");
-  //     }
-  //   }, [user]);
+  useEffect(() => {
+    if (showMessage) {
+      const timeout = setTimeout(() => {
+        setShowMessage(false);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, [showMessage]);
 
   if (!openSignup) return null;
   return (
@@ -72,35 +84,42 @@ const Signup = ({ onSwitch, onClose, openSignup, setOpenSignup }) => {
         X
       </button>
       <StyledLogin>
-        <h2 className="title">Nice to meet you !</h2>
-        <p>Name</p>
-        <input
-          onChange={(e) => {
-            setSignUpName(e.target.value);
-          }}
-          type="text"
-        />
-        <p>Email</p>
-        <input
-          onChange={(e) => {
-            setSignUpEmail(e.target.value);
-          }}
-          type="text"
-        />
-        <p>Password</p>
-        <input
-          onChange={(e) => setSignUpPassword(e.target.value)}
-          type="text"
-        />
+        <div className="title">
+          <h2>Nice to meet you !</h2>
+        </div>
+
+        <div className="form">
+          <p>Name</p>
+          <input
+            onChange={(e) => {
+              setSignUpName(e.target.value);
+            }}
+            type="text"
+          />
+          <p>Email</p>
+          <input
+            onChange={(e) => {
+              setSignUpEmail(e.target.value);
+            }}
+            type="text"
+          />
+          <p>Password</p>
+          <input
+            onChange={(e) => setSignUpPassword(e.target.value)}
+            type="password"
+          />
+        </div>
         <SignButton onClick={registerHandler}>Sign up</SignButton>
-        <p className="text">
+        <p className="question-text">
           Already have account?
           <button className="changePop" onClick={onSwitch}>
             sign in
           </button>
         </p>
+        {showMessage && errorMessage && (
+          <ErrorMessage>{errorMessage}</ErrorMessage>
+        )}
       </StyledLogin>
-      {error && <span>Something went wrong!</span>}
     </Container>
   );
 };

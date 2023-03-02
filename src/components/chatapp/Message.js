@@ -11,7 +11,7 @@ const Message = ({ message }) => {
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
-
+  console.log(user.photoURL);
   return (
     <Container
       ref={ref}
@@ -20,7 +20,9 @@ const Message = ({ message }) => {
       <MessageInfo>
         <img
           src={
-            message.senderId === user.uid ? user.photoURL : data.user.photoURL
+            message.senderId === user.uid && user.photoURL
+              ? user.photoURL || "user.png"
+              : data.user.photoURL || "user.png"
           }
           alt=""
         />
@@ -46,7 +48,7 @@ const Container = styled.div`
       align-items: flex-end;
     }
     p {
-      background-color: #8da4f1;
+      background-color: #f0ceaa;
       color: white;
       border-radius: 10px 0 10px 10px;
     }

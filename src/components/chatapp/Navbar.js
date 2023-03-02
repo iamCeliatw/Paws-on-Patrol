@@ -7,7 +7,7 @@ const Navbar = () => {
     <Container>
       <span className="logo">Chat Room</span>
       <div className="user">
-        <img src={user.photoURL} alt="" />
+        <img src={user.photoURL || "user.png"} alt="" />
         <span>{user.displayName}</span>
       </div>
     </Container>
@@ -19,7 +19,7 @@ export default Navbar;
 const Container = styled.div`
   display: flex;
   align-items: center;
-  background-color: #2f2d52;
+  background-color: #d5897e;
   height: 50px;
   padding: 10px;
   justify-content: space-between;

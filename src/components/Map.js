@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Circle,
   GoogleMap,
@@ -15,45 +15,66 @@ const containerStyle = {
 };
 
 function Map({
+  imgLoading,
+  isActive,
+  setIsActive,
   center,
   isLoaded,
   mapRef,
   icon,
   google,
-  getAllLocation,
   markers,
   km,
   getClickedUser,
   userPopups,
+  setUserPopups,
   userImage,
   mapId,
-  userDetail,
 }) {
-  useEffect(() => {
-    getAllLocation();
-  }, []);
+  //為了防止marker不斷被渲染並閃爍 使用useMemo鎖住它
+  const Markers = useMemo(() => {
+    // console.log("marker rendered!");
+    // console.log(markers);
+    return (
+      <>
+        {markers.map((m) => {
+          if (m.lng) {
+            return (
+              <MarkerF
+                onClick={(e) => getClickedUser(m, e)}
+                position={m}
+                icon={icon}
+                key={uuid()}
+              />
+            );
+          }
+          return null;
+        })}
+      </>
+    );
+  }, [markers]);
 
   return isLoaded ? (
     <StyledMap>
-      {userDetail && <UserBox userImage={userImage} userPopups={userPopups} />}
+      <UserBox
+        imgLoading={imgLoading}
+        setIsActive={setIsActive}
+        isActive={isActive}
+        userImage={userImage}
+        setUserPopups={setUserPopups}
+        userPopups={userPopups}
+      />
+
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
         zoom={14}
-        options={{ mapId: mapId }}
+        options={{ mapId: mapId, mapTypeControl: false }}
         onLoad={(map) => {
           mapRef.current = map;
         }}
       >
-        {markers.map((m) => (
-          <MarkerF
-            onClick={(e) => getClickedUser(m, e)}
-            // onClick={() => console.log(markers)}
-            position={m}
-            icon={icon}
-            key={uuid()}
-          />
-        ))}
+        {Markers}
         {google && (
           <Circle
             center={center}
@@ -77,7 +98,7 @@ function Map({
 
 const StyledMap = styled.div`
   width: 100%;
-  height: calc(100vh);
+  height: calc(100vh - 50px);
 `;
 
 export default React.memo(Map);

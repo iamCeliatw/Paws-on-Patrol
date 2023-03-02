@@ -1,8 +1,24 @@
 import React from "react";
-import { StyledFooter } from "../styles/Footer.styled";
+import styled from "styled-components";
 
-export const Footer = () => {
-  return <StyledFooter>Copyright © Paws on Patrol 2023</StyledFooter>;
+const Footer = () => {
+  return (
+    <StyledFooter>
+      Copyright © 2023 Paws on Patrol. All rights reserved.
+    </StyledFooter>
+  );
 };
 
 export default Footer;
+
+const StyledFooter = styled.div`
+  height: 50px; /*設定footer本身高度*/
+  background-color: ${({ theme }) => theme.colors.background};
+  line-height: 50px;
+  text-align: center;
+  margin-top: -50px;
+  position: absolute;
+  right: 0;
+  /* bottom: 0; */
+  left: 0;
+`;

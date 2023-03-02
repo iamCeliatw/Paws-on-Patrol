@@ -171,7 +171,7 @@ export const UserChat = styled.div`
   color: white;
   cursor: pointer;
   &:hover {
-    background-color: #2f2d52;
+    background-color: #f5ebe0;
   }
   img {
     width: 50px;
