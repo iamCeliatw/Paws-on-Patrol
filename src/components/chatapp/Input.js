@@ -15,35 +15,34 @@ import { UserAuth } from "../../context/AuthContext";
 
 const Input = () => {
   const { data } = ChatAuth();
-  const { user } = UserAuth();
-  const [text, setText] = useState("");
-  console.log(data);
+  const { user, text, setText, handleSend } = UserAuth();
+  //   const [text, setText] = useState("");
+  //   console.log(data);
   //   const [image, setImage] = useState(null);
-  const handleSend = async () => {
-    await updateDoc(doc(db, "chats", data.chatId), {
-      messages: arrayUnion({
-        id: uuid(),
-        text,
-        senderId: user.uid,
-        date: Timestamp.now(),
-      }),
-    });
+  //   const handleSend = async () => {
+  //     await updateDoc(doc(db, "chats", data.chatId), {
+  //       messages: arrayUnion({
+  //         id: uuid(),
+  //         text,
+  //         senderId: user.uid,
+  //         date: Timestamp.now(),
+  //       }),
+  //     });
 
-    await updateDoc(doc(db, "userChats", user.uid), {
-      [data.chatId + ".lastMessage"]: {
-        text,
-      },
-      [data.chatId + ".date"]: serverTimestamp(),
-    });
-    console.log(123);
-    await updateDoc(doc(db, "userChats", data.user.uid), {
-      [data.chatId + ".lastMessage"]: {
-        text,
-      },
-      [data.chatId + ".date"]: serverTimestamp(),
-    });
-    setText("");
-  };
+  //     await updateDoc(doc(db, "userChats", user.uid), {
+  //       [data.chatId + ".lastMessage"]: {
+  //         text,
+  //       },
+  //       [data.chatId + ".date"]: serverTimestamp(),
+  //     });
+  //     await updateDoc(doc(db, "userChats", data.user.uid), {
+  //       [data.chatId + ".lastMessage"]: {
+  //         text,
+  //       },
+  //       [data.chatId + ".date"]: serverTimestamp(),
+  //     });
+  //     setText("");
+  //   };
   return (
     <Container>
       <input
@@ -51,23 +50,10 @@ const Input = () => {
         type="text"
         placeholder="Type Something..."
         value={text}
+        onKeyPress={(e) => (e.key === "Enter" ? handleSend(data) : null)}
       />
       <Send>
-        {/* <input
-          type="file"
-          style={{ display: "none" }}
-          id="file"
-          onChange={(e) => setImage(e.target.files[0])}
-        /> */}
-        {/* <label htmlFor="file">
-          <MdAttachFile className="icon" size={24} color="lightgray" />
-          <MdOutlineAddPhotoAlternate
-            size={24}
-            color="lightgray"
-            className="icon"
-          />
-        </label> */}
-        <button onClick={handleSend}>Send</button>
+        <button onClick={() => handleSend(data)}>Send</button>
       </Send>
     </Container>
   );
@@ -108,7 +94,11 @@ const Send = styled.div`
     border: none;
     padding: 10px 15px;
     color: white;
-    background-color: #8da4f1;
+    background-color: #f0dbdb;
     cursor: pointer;
+    &:hover {
+      color: #ffffff;
+      background-color: #dba39a;
+    }
   }
 `;

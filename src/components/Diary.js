@@ -4,7 +4,7 @@ import { FiDelete } from "react-icons/fi";
 import { InputPlace, InputTextArea } from "../styles/Account.styled";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { storage } from "../firebase.config";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { UserAuth } from "../context/AuthContext";
 import { uuidv4 } from "@firebase/util";
 
@@ -14,13 +14,8 @@ const Diary = ({
   diaries,
   setDiaries,
   i,
-  photoUpload,
-  setPhotoUpload,
-  mypreview,
-  setMyPreview,
-  //   getDiaryPhoto,
-  photoURL,
-  setPhotoURL,
+  dirty,
+  setDirty,
 }) => {
   const { user } = UserAuth();
   const uid = user.uid;
@@ -30,18 +25,23 @@ const Diary = ({
       prev[i]["title"] = e.target.value;
       return [...prev];
     });
+    setDirty(true);
   };
   const [diaryLoad, setDiaryLoad] = useState(null);
   const [preview, setPreview] = useState(null);
-  //   const [photoURL, setPhotoURL] = useState(null);
-
+  const [imgElement, setImgElement] = useState("");
   const getDiaryText = (e) => {
     setDiaries((prev) => {
       prev[i]["text"] = e.target.value;
       console.log(prev[i]["text"]);
       return [...prev];
     });
+    setDirty(true);
   };
+
+  //   useEffect(() => {
+  //     getDiaryURL(imgElement, i);
+  //   }, []);
 
   useEffect(() => {
     if (diaryLoad) {
@@ -51,39 +51,36 @@ const Diary = ({
       };
       reader.readAsDataURL(diaryLoad);
     }
-    console.log(diaryLoad);
+    // console.log(diaryLoad);
   }, [diaryLoad]);
 
   const getFile = async (e) => {
-    // console.log(e);
-    let imageElement = e.target.parentElement.children[0];
-    // console.log("imgele", imgElement);
+    setDiaryLoad(e.target.files[0]);
+    setImgElement(e.target.parentElement.children[0]);
+    uploadFile(e);
+  };
+  const uploadFile = async (e) => {
     let file = e.target.files[0];
-    console.log(1);
-    setDiaryLoad(file);
     const fileRef = ref(storage, `${uid}/${file.name}`);
     let result = await uploadBytes(fileRef, file);
-    // console.log(result);
     diaries[i]["photo"] = result.metadata.name;
+    console.log(diaries[i]["photo"]);
     let newDiaries = [...diaries];
     await setDiaries(newDiaries);
-    getDiaryURL(imageElement, i);
+    getDiaryURL(imgElement, i);
+    setDirty(true);
   };
 
   const getDiaryURL = (imageElement, i) => {
     let imageName = diaries[i]["photo"];
+    // console.log(imageName);
     if (imageName) {
       getDownloadURL(ref(storage, `${uid}/${imageName}`))
         .then((url) => {
-          if (url) {
-            imageElement.src = url;
-            setDiaries((prev) => {
-              prev[i]["photo"] = url;
-              return [...prev];
-            });
-          } else {
-            return;
-          }
+          setDiaries((prev) => {
+            prev[i]["photo"] = url;
+            return [...prev];
+          });
         })
         .catch((e) => {
           console.log(e.message);
@@ -92,37 +89,28 @@ const Diary = ({
       return;
     }
   };
-
-  // 待解決問題： 把上傳拆出來 待save之後再執行
-  // storage and firestore 用照片名字關聯取出??
-
   return (
-    <StyledDiv style={{ marginBottom: "100px" }}>
+    <StyledDiv>
       <FiDelete
         className="closeIcon"
         size={30}
         color="#5c5c5c"
-        onClick={() => handleDelete(i)}
+        onClick={() => {
+          handleDelete(i);
+          setDirty(true);
+        }}
       />
       <div className="diary-img">
         <label className="upload_cover">
-          {/* {mypreview ? (
-            <img className="diaryImg" src={mypreview} alt="" />
-          ) : photoUpload ? (
-            <img className="diaryImg" src={photoUpload} alt="" />
-          ) : (
-            ""
-          )} */}
-          {(diary["photo"] && (
+          {preview ? (
+            <img src={preview} className="diaryImg" />
+          ) : diary["photo"] ? (
             <img src={diary["photo"]} className="diaryImg" />
-          )) ||
-            ""}
-          {/* <img src={preview} className="diaryImg" /> */}
+          ) : (
+            <img src={"walkdog.png"} className="diaryImg" />
+          )}
           <input
             id="upload_input"
-            // onChange={(e) => {
-            //   setDiaryLoad(e.target.files[0]);
-            // }}
             key={uuidv4()}
             onChange={(key) => getFile(key)}
             type="file"
@@ -133,14 +121,16 @@ const Diary = ({
       </div>
       <div className="diary-text">
         <DiaryInput
+          placeholder="幫您的日記取個名字吧"
           value={diaries[i]["title"] ? diaries[i]["title"] : ""}
           onChange={getDiaryTitle}
           type="text"
         />
         <DiaryTextArea
+          placeholder="寫下你和毛孩的故事..."
           value={diaries[i]["text"] ? diaries[i]["text"] : ""}
           onChange={getDiaryText}
-          cols="30"
+          cols="50"
           rows="10"
         ></DiaryTextArea>
       </div>
@@ -151,53 +141,69 @@ const Diary = ({
 export default Diary;
 
 const StyledDiv = styled.div`
+  padding: 15px;
   position: relative;
   display: flex;
-  align-items: center;
   width: 100%;
-  min-height: 300px;
+  height: 350px;
   border-radius: 5px;
   background-color: #ebebeb;
   justify-content: space-around;
+  margin-bottom: 50px;
+  align-items: center;
+  ${({ theme }) => theme.media.laptop`
+  height: 450px;
+  flex-direction: column;
+    text-align: center;
+ `}
+
+  .diary-img {
+    /* width: 40%; */
+  }
+
   .upload_cover {
-    background-color: #fff;
-    margin: auto;
-    padding: 10px;
-    width: 150px;
-    height: 150px;
+    margin-top: 25px;
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
     position: relative;
     cursor: pointer;
+    /* ${({ theme }) => theme.media.laptop`
+    width: 80%;`} */
   }
+  .diaryImg {
+    border-radius: 10px;
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    /* aspect-ratio: 3/2; */
+  }
+
   .plus_icon {
     position: absolute;
     right: 45%;
     top: 45%;
   }
-  .diaryImg {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
+
   #upload_input {
     display: none;
   }
 
   .diary-text {
+    height: 56%;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
     display: flex;
     flex-direction: column;
-    width: 300px;
-    input {
-      width: inherit;
-    }
-    textarea {
-      width: inherit;
-      margin: 10px 0;
-    }
+    ${({ theme }) => theme.media.tablet`
+      align-items: center;
+      width: -webkit-fill-available;
+ `}
   }
   .closeIcon {
     position: absolute;
@@ -205,19 +211,41 @@ const StyledDiv = styled.div`
     top: 3%;
     cursor: pointer;
   }
-  @media (max-width: 768px) {
-    flex-direction: column;
-    text-align: center;
-    .diary-text {
-      align-items: center;
-    }
+`;
+const DiaryInput = styled.input`
+  width: 100%;
+
+  margin: 25px auto;
+  padding: 5px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  filter: drop-shadow(1px 0px 2px rgba(15, 15, 51, 0.4));
+  font-size: 15px;
+  background-color: #ebebeb;
+  transition: 0.3s;
+  :hover,
+  :focus {
+    border-radius: 8px;
+    box-shadow: 0 3px 3px rgba(15, 15, 51, 0.4);
   }
 `;
-const DiaryInput = styled(InputPlace)`
-  width: 100%;
-  margin: 0 0 10px 0;
-`;
 
-const DiaryTextArea = styled(InputTextArea)`
-  height: 122px;
+const DiaryTextArea = styled.textarea`
+  width: 100%;
+  padding: 5px;
+  /* aspect-ratio: 3/1; */
+  white-space: pre-wrap;
+  resize: none;
+  border: none;
+  border-radius: 15px;
+  filter: drop-shadow(1px 0px 2px rgba(15, 15, 51, 0.4));
+  background-color: #ebebeb;
+  transition: 0.3s;
+  :hover,
+  :focus {
+    outline: none;
+    border-radius: 8px;
+    box-shadow: 0 3px 3px rgba(15, 15, 51, 0.4);
+  }
 `;

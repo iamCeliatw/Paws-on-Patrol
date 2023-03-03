@@ -6,14 +6,14 @@ import { ChatAuth } from "../../context/ChatContext";
 import { UserChat, UserChatInfo } from "./Search";
 import { db } from "../../firebase.config";
 const Chats = () => {
-  const [chats, setChats] = useState([]);
-  const { user } = UserAuth();
+  const [chats, setChats] = useState({});
+  const { user, searchUser } = UserAuth();
   const { dispatch } = ChatAuth();
   useEffect(() => {
     const getChats = () => {
       const unsub = onSnapshot(doc(db, "userChats", user.uid), (doc) => {
-        // console.log("current Data:", doc.data());
-        setChats(doc.data());
+        console.log(doc.data());
+        setChats(doc.data() || []);
       });
       return () => {
         unsub();
@@ -23,6 +23,7 @@ const Chats = () => {
   }, [user.uid]);
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
+    console.log(u);
   };
 
   return (
@@ -35,23 +36,27 @@ const Chats = () => {
                 key={chat[0]}
                 onClick={() => handleSelect(chat[1].userInfo)}
               >
-                {/* <img
+                <img
                   src={
-                    chat[1].userInfo.photoURL ? chat[1].userInfo.photoURL : ""
+                    chat[1].userInfo.photoURL
+                      ? chat[1].userInfo.photoURL
+                      : "user.png"
                   }
-                  alt=""
-                /> */}
+                />
                 <UserChatInfo>
                   <span>{chat[1].userInfo.name}</span>
                   <p>{chat[1].lastMessage?.text}</p>
                 </UserChatInfo>
               </UserChat>
             ))
-        : ""}
+        : []}
     </Container>
   );
 };
 
 export default Chats;
 
-const Container = styled.div``;
+const Container = styled.div`
+  height: calc(100% - 50px);
+  overflow: scroll;
+`;

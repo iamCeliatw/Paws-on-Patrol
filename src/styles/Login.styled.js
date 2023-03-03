@@ -5,7 +5,7 @@ export const Container = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
-  height: 380px;
+  height: 350px;
   position: absolute;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.background};
@@ -23,39 +23,50 @@ export const Container = styled.div`
 `;
 
 export const StyledLogin = styled.div`
+  width: 80%;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   .title {
+    color: gray;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 18px;
   }
-  input {
-    width: 70%;
-    height: 30px;
-    margin-bottom: 20px;
+  .form {
+    width: 90%;
+    margin: 0 auto;
+    p {
+      text-align: left;
+    }
+    input {
+      padding-left: 5px;
+      width: 100%;
+      height: 30px;
+      margin-bottom: 10px;
+    }
   }
-  .text {
-    margin: 5px auto;
+  .question-text {
+    margin-top: 8px;
   }
   .changePop {
     text-align: center;
+    border: none;
     margin-left: 5px;
     cursor: pointer;
     color: #5b5b5b;
-    background-color: #ffffff;
-    width: 60px;
-    height: 30px;
-    border-radius: 5px;
-    border: #5b5b5b solid 1px;
+    /* background-color: #ffffff; */
+    /* width: 60px; */
+    /* height: 30px; */
+    /* border-radius: 5px; */
+    /* border: #5b5b5b solid 1px; */
     &:hover {
       color: #fff;
       background-color: #696fff;
     }
   }
-  .or-divider {
+  /* .or-divider {
     color: #c3c3c3;
     margin: 10px 0;
     display: flex;
@@ -63,8 +74,8 @@ export const StyledLogin = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 1em;
-  }
-  .or-divider.italic {
+  } */
+  /* .or-divider.italic {
     font-style: italic;
   }
   .or-divider::before {
@@ -90,7 +101,7 @@ export const StyledLogin = styled.div`
     height: 18px;
     vertical-align: sub;
     margin-right: 3px;
-  }
+  } */
 `;
 
 export const Button = styled.button`
@@ -115,4 +126,8 @@ export const SignButton = styled(Button)`
     color: #fff;
     background-color: #696fff;
   }
+`;
+
+export const ErrorMessage = styled.span`
+  color: #e64c3c;
 `;

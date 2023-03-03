@@ -1,36 +1,38 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  /* position: relative; */
+`;
+
 export const StyledAccount = styled.div`
   margin: auto;
-  width: 60%;
   display: flex;
   flex-direction: column;
-  .diaryButton {
-    margin: 50px auto 100px auto;
-    border: none;
-    background-color: white;
-    width: 80px;
-    font-size: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
-    cursor: pointer;
-    &:hover {
-      background-color: #5b5b5b;
-      color: #ffffff;
-    }
-  }
+`;
+
+export const MarginBox = styled.div`
+  margin: 200px auto 100px auto;
+  width: 60%;
+  min-height: 100vh;
+  ${({ theme }) => theme.media.tablet`
+  width:100%;
+  `}
 `;
 
 export const StyledDiv = styled.div`
+  margin: auto;
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 300px;
+  min-height: 100px;
   border-radius: 5px;
   background-color: #ebebeb;
   justify-content: space-around;
-
+  ${({ theme }) => theme.media.tablet`
+   flex-direction: column;
+    text-align: center;
+  `}
   .upload_cover {
     background-color: #fff;
     margin: auto;
@@ -51,29 +53,15 @@ export const StyledDiv = styled.div`
     display: none;
   }
 
-  .saveBtn {
-    cursor: pointer;
-    position: absolute;
-    right: 3%;
-    top: 15px;
-    font-size: 20px;
-    height: 30px;
-    width: 70px;
-    background-color: #ffffff;
-    &:hover {
-      border: 1px solid #5b5b5b;
-      background-color: #474747;
-      color: #ffffff;
-      opacity: 0.8;
-    }
-  }
   .profileImgDiv {
     margin: 15px 0;
     text-align: center;
-    width: 400px;
+    flex: 1;
     position: relative;
   }
   .profileText {
+    margin: 15px 0;
+    flex: 2;
     color: #5b5b5b;
   }
   .plus_icon {
@@ -90,12 +78,24 @@ export const StyledDiv = styled.div`
     left: 5%;
     border-radius: 50%;
   }
-
-  button {
-    border-radius: 20px;
+  .confirmButton {
+    margin: 10px;
+    border-radius: 10px;
     border: none;
-    font-size: 18px;
-    height: 15px;
+    color: #5b5b5b;
+    background-color: #ffffff;
+    width: 70px;
+    height: 23px;
+    font-size: 13px;
+    vertical-align: top;
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    &:hover {
+      background-color: #ffffffac;
+    }
+    ${({ theme }) => theme.media.tablet`
+    margin-top: 10px;
+    `}
   }
 
   input[type="radio"]:checked + label {
@@ -121,26 +121,26 @@ export const StyledDiv = styled.div`
     cursor: pointer;
   }
   .autoplace {
-    height: 20px;
     position: absolute;
     top: 0;
-    left: 26%;
+    left: 30%;
+    border-radius: 10px;
+    border: none;
+    color: #5b5b5b;
+    background-color: #ffffff;
+    width: 70px;
+    height: 23px;
     font-size: 13px;
+    vertical-align: top;
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
+    /* filter: drop-shadow(0px 0px 2px rgba(15, 15, 51, 0.4)); */
     cursor: pointer;
-    background-color: white;
-    border: 1px solid #5b5b5b;
     &:hover {
-      background-color: #5b5b5b;
-      color: white;
+      background-color: #ffffffac;
     }
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    text-align: center;
-  }
-  .profileText {
-    width: 100%;
+    ${({ theme }) => theme.media.tablet`
+    left: 70%;
+    `}
   }
 `;
 
@@ -166,7 +166,7 @@ export const InputPlace = styled.input`
   padding: 12.5px;
   outline: none;
   border: none;
-  border-radius: 30px;
+  border-radius: 10px;
   filter: drop-shadow(1px 0px 2px rgba(15, 15, 51, 0.4));
   font-size: 15px;
   background-color: #ebebeb;
@@ -176,22 +176,62 @@ export const InputPlace = styled.input`
     border-radius: 8px;
     box-shadow: 0 3px 3px rgba(15, 15, 51, 0.4);
   }
+
+  ${({ theme }) => theme.media.tablet`
+  width:100%;
+  margin: 0 ;
+  `}
 `;
 
 export const Title = styled.h3`
   color: #5b5b5b;
   margin: 10px 0px;
 `;
+
+export const Keyword = styled.div`
+  background-color: #ebebeb;
+  padding: 15px;
+  border-radius: 5px;
+  width: 100%;
+  .tag {
+    display: inline-block;
+    word-wrap: break-word;
+    margin: 0 5px;
+    padding: 5px 12px;
+    width: auto;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #ffffff;
+    button {
+      border: none;
+      background-color: lightgray;
+      border-radius: 100%;
+      width: 20px;
+      height: 20px;
+      margin-left: 5px;
+    }
+  }
+  .tagInput {
+    margin: 5px;
+  }
+
+  .icon {
+    vertical-align: text-top;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+`;
 export const InputTextArea = styled.textarea`
   padding: 12.5px;
   aspect-ratio: 3/1;
   white-space: pre-wrap;
-  width: 80%;
-  height: auto;
+  width: 100%;
+  height: 100%;
   margin: 10px auto;
   resize: none;
   border: none;
-  border-radius: 30px;
+  border-radius: 15px;
   filter: drop-shadow(1px 0px 2px rgba(15, 15, 51, 0.4));
   background-color: #ebebeb;
   transition: 0.3s;
@@ -200,5 +240,61 @@ export const InputTextArea = styled.textarea`
     outline: none;
     border-radius: 8px;
     box-shadow: 0 3px 3px rgba(15, 15, 51, 0.4);
+  }
+`;
+
+export const Button = styled.div`
+  display: flex;
+  justify-content: center;
+  .diaryButton {
+    border: none;
+    color: #5b5b5b;
+    background-color: #ffffff;
+    width: 100px;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 30px;
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
+    /* filter: drop-shadow(0px 0px 2px rgba(15, 15, 51, 0.4)); */
+    cursor: pointer;
+    &:hover {
+      background-color: #5b5b5b;
+      color: #ffffff;
+    }
+  }
+`;
+
+export const AboutmeInput = styled(InputPlace)`
+  width: 100%;
+  height: auto;
+`;
+export const SaveButton = styled.button`
+  text-align: center;
+  position: absolute;
+  right: 20%;
+  top: 18%;
+  font-size: 20px;
+  background-color: #ffffff;
+  border: none;
+  color: #5b5b5b;
+  width: 90px;
+  height: 40px;
+  border-radius: 30px;
+  box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
+  ${({ theme }) => theme.media.tablet`
+     background-image: url(save.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50% 50%;
+    padding: 20px;
+    font-size: 0;
+    width: 35px;
+    height: 35px;
+    right: 5%;
+    `}
+  cursor: pointer;
+  &:hover {
+    background-color: #5b5b5b;
+    color: #ffffff;
   }
 `;

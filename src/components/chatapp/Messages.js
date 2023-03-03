@@ -28,7 +28,7 @@ const Messages = () => {
 export default Messages;
 
 const Container = styled.div`
-  background-color: #ddddf7;
+  background-color: #fefcf3;
   padding: 10px;
   height: calc(100% - 100px);
   overflow: scroll;

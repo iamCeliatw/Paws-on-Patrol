@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Homepage";
-import LoginPage from "./pages/LoginPage";
+import Main from "./pages/Main";
 import SignupPage from "./pages/SignupPage";
 import Chatbox from "./pages/Chatbox";
 import GlobslStyles from "./styles/Global";
@@ -10,9 +10,11 @@ import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { css } from "styled-components";
 import Account from "./pages/Account";
-import Payment from "./pages/Payment";
 import { ChatContextProvider } from "./context/ChatContext";
 import Success from "./pages/Success";
+import Reserve from "./pages/Reserve";
+import History from "./pages/History";
+import List from "./pages/List";
 
 const theme = {
   colors: {
@@ -27,12 +29,12 @@ const theme = {
       }
     `,
     laptop: (...args) => css`
-      @media (min-width: 1200px) {
+      @media (max-width: 1200px) {
         ${css(...args)}
       }
     `,
     mobile: (...args) => css`
-      @media (min-width: 400px) {
+      @media (max-width: 450px) {
         ${css(...args)}
       }
     `,
@@ -46,14 +48,16 @@ function App() {
           <ChatContextProvider>
             <GlobslStyles />
             <Routes>
-              <Route path="/" element={<LoginPage />} />
+              <Route path="/" element={<Main />} />
               <Route path="/Signup" element={<SignupPage />} />
               <Route path="/Home" element={<HomePage />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/Account" element={<Account />} />
+                <Route path="/Reserve/:id" element={<Reserve />} />
                 <Route path="/Chatbox" element={<Chatbox />} />
-                <Route path="/Payment" element={<Payment />} />
+                <Route path="/History" element={<History />} />
                 <Route path="/Success" element={<Success />} />
+                <Route path="/List" element={<List />} />
               </Route>
             </Routes>
           </ChatContextProvider>
