@@ -149,7 +149,7 @@ const StyledDiv = styled.div`
   border-radius: 5px;
   background-color: #ebebeb;
   justify-content: space-around;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   align-items: center;
   ${({ theme }) => theme.media.laptop`
   height: 450px;
@@ -232,6 +232,7 @@ const DiaryInput = styled.input`
 `;
 
 const DiaryTextArea = styled.textarea`
+  margin: 0 0 10px 0;
   width: 100%;
   padding: 5px;
   /* aspect-ratio: 3/1; */

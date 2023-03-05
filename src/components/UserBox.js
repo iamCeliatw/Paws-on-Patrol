@@ -20,7 +20,6 @@ const UserBox = ({
   const navigate = useNavigate();
   useEffect(() => {
     if (userPopups) {
-      console.log(userPopups);
       setUserAddress(userPopups.address);
       setUserPrice(userPopups.price);
       setUserName(userPopups.name);
@@ -87,15 +86,19 @@ const Container = styled.div`
   position: absolute;
   right: 0;
   top: 20%;
-  z-index: 2;
-  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 18%);
-  /* opacity: ${(props) => (props.isActive ? 1 : 0)}; */
+  z-index: 1;
+  background-color: #ffffff;
+  /* box-shadow: 0 4px 20px 0 rgb(0 0 0 / 18%); */
+  opacity: ${(props) => (props.isActive ? 1 : 0)};
   transform: translateX(${(props) => (props.isActive ? "-5%" : 0)});
   transition: all 0.5s ease-in-out;
-  background-color: rgba(255, 255, 255, ${(props) => (props.isActive ? 1 : 0)});
+  /* background-color: rgba(255, 255, 255, ${(props) =>
+    props.isActive ? 1 : 0}); */
   visibility: ${(props) => (props.isActive ? "visible" : "hidden")};
 
   ${({ theme }) => theme.media.tablet`
+  height: fit-content;
+    padding: 10px;
     padding: 10px;
     right: 30%;
     top: 14%;
@@ -103,7 +106,6 @@ const Container = styled.div`
     `}
 
   ${({ theme }) => theme.media.mobile`
-    padding: 0px;
     right: 15%;
     top: 14%;
     transform: translateY(${(props) => (props.isActive ? "5%" : 0)});
@@ -120,19 +122,6 @@ const StyledUserBox = styled.div`
   justify-content: center;
   align-items: center;
   line-height: 30px;
-  ${({ theme }) => theme.media.mobile`
-  height: 250px;
-  `}
-  /* &:after {
-    content: " ";
-    position: absolute;
-    right: 43%;
-    bottom: -15px;
-    border-top: 15px solid #d9d9d9;
-    border-right: 15px solid transparent;
-    border-left: 7px solid transparent;
-    border-bottom: none;
-  } */
   .closeButton {
     position: absolute;
     right: 15px;

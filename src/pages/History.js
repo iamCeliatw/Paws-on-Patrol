@@ -47,12 +47,27 @@ const Container = styled.div`
   display: flex;
   width: 70%;
   margin: auto;
+  ${({ theme }) => theme.media.tablet`
+  padding: 0 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    `}
+  ${({ theme }) => theme.media.tablet`
+    width:95%;
+    `}
 `;
 const LeftBar = styled.div`
   width: auto;
   margin: 120px auto 75px auto;
   flex: 1;
   height: fit-content;
+  ul {
+    ${({ theme }) => theme.media.tablet`
+    max-width: 36px;
+    `}
+  }
   &:hover {
     cursor: pointer;
   }
@@ -60,6 +75,7 @@ const LeftBar = styled.div`
     padding: 10px 5px;
     list-style: none;
     position: relative;
+    padding-left: 12px;
     ${({ theme }) => theme.media.mobile`
         font-size: 14px;
     `}
@@ -79,11 +95,13 @@ const LeftBar = styled.div`
       height: 100%;
       background: #d5897e;
       display: flex;
+      margin-right: 3px;
     }
   }
 `;
 const Main = styled.div`
   margin: 120px auto 75px auto;
-
   flex: 3;
+  ${({ theme }) => theme.media.mobile`
+   width: 85%;`}
 `;

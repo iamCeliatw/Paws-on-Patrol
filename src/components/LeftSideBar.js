@@ -11,17 +11,24 @@ const LeftSideBar = ({
   handlePriceChange,
   km,
   setKm,
+  showAlert,
+  setShowAlert,
   formattedPrice,
+  openLocation,
 }) => {
   const [selectKm, setSelectKm] = useState(0);
 
   const keyPress = (e) => {
     if (e.key === "Enter" && mapInputValue !== "") {
       locationHandler();
-      console.log(123);
     }
   };
   const handleKmClick = (km) => {
+    if (!openLocation) {
+      setKm(null);
+      setShowAlert(true);
+      return;
+    }
     setSelectKm(km);
     setKm(km);
   };
@@ -43,6 +50,7 @@ const LeftSideBar = ({
       <Container>
         <div>
           <p>搜尋地點</p>
+
           <input
             placeholder="查詢其他地點..."
             className="locateInput"
@@ -71,18 +79,33 @@ const LeftSideBar = ({
           </div>
         </div>
         <div>
-          <p>距離</p>
+          <p style={{ display: "inline-block" }}>距離</p>
+          <button
+            className="cleanBtn"
+            onClick={() => {
+              setKm("");
+              setSelectKm("");
+            }}
+          >
+            清除
+          </button>
           <div className="button-div">
             <button
-              className={selectKm === 1000 ? "button-click" : "button"}
+              className={
+                openLocation && selectKm === 1000 ? "button-click" : "button"
+              }
               onClick={() => handleKmClick(1000)}
             >{`>1km`}</button>
             <button
-              className={selectKm === 2000 ? "button-click" : "button"}
+              className={
+                openLocation && selectKm === 2000 ? "button-click" : "button"
+              }
               onClick={() => handleKmClick(2000)}
             >{`>2km`}</button>
             <button
-              className={selectKm === 3000 ? "button-click" : "button"}
+              className={
+                openLocation && selectKm === 3000 ? "button-click" : "button"
+              }
               onClick={() => handleKmClick(3000)}
             >{`>3km`}</button>
           </div>
@@ -105,7 +128,7 @@ export const StyledLeftSideBar = styled.div`
   width: fit-content;
   ${({ theme }) => theme.media.tablet`
     border-radius: 10px 10px 0px 0px;
-    bottom:  ${(props) => (props.openFilterBar ? "-400px" : "-158px")}; 
+    bottom:  ${(props) => (props.openFilterBar ? "-370px" : "-111px")}; 
     transition: all 0.5s ease-in-out;
     top: auto;
     background-color: rgba(255, 255, 255, 0.9);
@@ -256,6 +279,22 @@ export const Container = styled.div`
         /* color: #ffffff; */
         /* background-color: ${({ theme }) => theme.colors.gray}; */
       }
+    }
+  }
+
+  .cleanBtn {
+    margin-left: 15px;
+    vertical-align: text-bottom;
+    cursor: pointer;
+    width: 50px;
+    height: 20px;
+    border: none;
+    border-radius: 20px;
+    /* box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08); */
+    background-color: #aaa;
+    color: white;
+    &:hover {
+      opacity: 0.6;
     }
   }
 `;

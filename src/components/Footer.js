@@ -19,6 +19,8 @@ const StyledFooter = styled.div`
   margin-top: -50px;
   position: absolute;
   right: 0;
-  /* bottom: 0; */
   left: 0;
+  ${({ theme }) => theme.media.mobile`
+font-size: 13px;
+  `}
 `;

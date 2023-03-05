@@ -15,10 +15,9 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import Footer from "../components/Footer";
-
+import { SaveButton } from "../styles/Account.styled";
 const Reserve = () => {
   const { dispatch } = ChatAuth();
-
   const { id } = useParams();
   const [memberData, setMemberData] = useState({});
   const [diaries, setDiaries] = useState([]);
@@ -37,104 +36,8 @@ const Reserve = () => {
   } = UserAuth();
   const [openInvite, setOpenInvite] = useState(false);
   const { data } = ChatAuth();
-  //   //payment function
-  //   const handlePayment = async (memberdata, user) => {
-  //     if (paymentLoading) {
-  //       return;
-  //     }
-  //     setPaymentLoading(true);
-  //     console.log(user.displayName);
-  //     const userId = user.uid;
-  //     const userName = user.displayName;
-  //     const userPhotoURL = user.photoURL;
-  //     const memberId = memberdata.uid;
-  //     const price = memberdata.price;
-  //     const memberName = memberdata.name;
-  //     const memberPhotoURL = memberdata.profileURL;
-  //     console.log(user.displayName, user.photoURL);
-  //     const filterPrice = parseInt(price.replace(/[^0-9]/gi, ""), 10);
-  //     const stripe = await loadStripe(
-  //       "pk_test_51MZSBHAx03PMdijSJDe1PlZn8fiWwVlA1xee0ipHioQXQTRSZvEah09XZR80PxSrExr7ykyVMwhWWpFzYu1mAoYC00VlECtoVk"
-  //     );
-  //     try {
-  //       createStripeCheckout({
-  //         unitAmount: filterPrice,
-  //         userid: userId,
-  //         memberid: memberId,
-  //         memberName: memberName,
-  //         memberPhotoURL: memberPhotoURL,
-  //         userName: userName,
-  //         userPhotoURL: userPhotoURL,
-  //       }).then((response) => {
-  //         const sessionId = response.data.id;
-  //         stripe.redirectToCheckout({ sessionId: sessionId });
-  //       });
-  //       setPaymentLoading(false);
-  //     } catch (err) {
-  //       setPaymentLoading(false);
-  //       alert(err);
-  //     }
-  //   };
-
-  //實時監聽status變化
-  //   useEffect(() => {
-  //     const getStatus = () => {
-  //       if (memberData.uid) {clientList[index]["fromUser"]["id"]
-  //         const unsub = onSnapshot(
-  //           doc(db, "invitation", memberData.uid),
-  //           (doc) => {
-  //             if (doc.data()) {
-  //               setStatus(doc.data().status);
-  //             }
-  //           }
-  //         );
-  //         return () => {
-  //           unsub();
-  //         };
-  //       }
-  //     };
-  //     getStatus();
-  //   }, [memberData.uid]);
-
-  //   useEffect(() => {
-  //     if (memberData && memberData.uid) {
-  //       const getData = async () => {
-  //         const inviteUserRef = await getDoc(
-  //           doc(db, "invitation", memberData.uid)
-  //         );
-  //         if (
-  //           inviteUserRef.data() &&
-  //           inviteUserRef.data().clientInfo.id === user.uid &&
-  //           inviteUserRef.data().status === "cancel"
-  //         ) {
-  //           setOpenInvite(false);
-  //         } else if (
-  //           inviteUserRef.data() &&
-  //           inviteUserRef.data().clientInfo.id === user.uid
-  //         ) {
-  //           setOpenInvite(true);
-  //         }
-  //       };
-  //       getData();
-  //     }
-  //   }, [memberData]);
-
-  //   useEffect(() => {
-  //     if (!memberData || !memberData.uid) return;
-
-  //     const getData = async () => {
-  //       const inviteUserRef = await getDoc(doc(db, "invitation", memberData.uid));
-  //       const inviteData = inviteUserRef.data();
-
-  //       if (!inviteData || inviteData.clientInfo.id !== user.uid) return;
-
-  //       setOpenInvite(inviteData.status !== "cancel");
-  //     };
-  //     getData();
-  //   }, [memberData, user.uid]);
 
   const handleChat = async () => {
-    console.log(searchUser.uid, user.uid);
     await handleSelect();
     dispatch({
       type: "CHANGE_USER",
@@ -171,40 +74,16 @@ const Reserve = () => {
         name: user.displayName,
       },
       toUser: {
-        id: memberData.uid,
-        photoURL: memberData.profileURL,
+        uid: memberData.uid,
+        profileURL: memberData.profileURL,
         name: memberData.name,
       },
       price: memberData.price,
       date: serverTimestamp(),
     });
     setOpenInvite(true);
-    // }
-    // else {
-    //   alert("暫時無法邀請此用戶，請選擇其他用戶");
-    // }
   };
-  //已接收邀請後 按取消付款
-  //   const cancelPayment = async () => {
-  //     setCancelPay(true);
-  //     setOpenInvite(false);
-  //     updateDoc(doc(db, "invitation", memberData.uid), {
-  //       status: "cancel",
-  //     });
-  //   };
-  //邀請對方未回應時 按取消邀請
-  //   const cancelInvite = async () => {
-  //     setOpenInvite(false);
-  //     const inviteUserRef = await getDoc(doc(db, "invitation", memberData.uid));
-  //     if (inviteUserRef.exists()) {
-  //       await deleteDoc(doc(db, "invitation", memberData.uid));
-  //     }
-  //   };
-  //邀請對方被拒時 按確認 刪除資料庫並回到主頁面
-  //   const cancelComfirm = async () => {
-  //     await deleteDoc(doc(db, "invitation", memberData.uid));
-  //     navigate("/home");
-  //   };
+
   useEffect(() => {
     const getData = async () => {
       const docRef = doc(db, "user", id);
@@ -234,59 +113,15 @@ const Reserve = () => {
           </button>
         </InviteBox>
       )}
-      {/* <OverLay openInvite={openInvite}></OverLay>
-      {openInvite && status === "pending" ? (
-        <InviteBox>
-          <b>等待對方接收邀請中，請稍候．．． </b>
-          <button className="btn cancel" onClick={cancelInvite}>
-            取消
-          </button>
-        </InviteBox>
-      ) : openInvite && status === "accept" ? (
-        <InviteBox>
-          <b>對方已確認訂單，請立即前往付款</b>
-          <div className="btnDiv">
-            <button
-              className="btn pay"
-              onClick={() => {
-                handlePayment(memberData, user);
-              }}
-            >
-              立即付款
-            </button> */}
-      {/* <button
-              className="btn cancel"
-              onClick={() => {
-                cancelPayment();
-              }}
-            >
-              取消付款
-            </button> */}
-      {/* </div> */}
-      {/* </InviteBox> */}
-      {/* ) : openInvite && !cancelPay && status === "denied" ? (
-        <InviteBox>
-          <b>對方現在無法接受，請另尋其他褓姆</b>
-          <button className="btn" onClick={() => cancelComfirm()}>
-            回主頁面
-          </button>
-        </InviteBox>
-      ) : openInvite && cancelPay && status === "cancel" ? (
-        <InviteBox>
-          <b>另尋其他褓姆</b>
-          <button onClick={() => navigate("/Home")}>回主頁面</button>
-        </InviteBox>
-      ) : null} */}
+
       <div>
         <Nav />
         <Container style={{ position: "relative" }}>
           <Button>
-            <button className="button invite" onClick={handleInvite}>
-              invite
-            </button>
-            <button className="button chat" onClick={handleChat}>
-              chat
-            </button>
+            <SaveButton className="inviteBtn" onClick={handleInvite}>
+              邀請
+            </SaveButton>
+            <SaveButton onClick={handleChat}>聊一聊</SaveButton>
           </Button>
           <StyledDiv>
             <div className="profileImgDiv">
@@ -321,7 +156,7 @@ const Reserve = () => {
           <Title>我的保姆日記</Title>
           {diaries ? (
             diaries.map((diary, i) => (
-              <StyledDiv key={i} style={{ marginBottom: "130px" }}>
+              <StyledDiv key={i} style={{ marginBottom: "50px" }}>
                 <div className="profileImgDiv">
                   <div className="diary_div">
                     <img
@@ -337,12 +172,14 @@ const Reserve = () => {
               </StyledDiv>
             ))
           ) : (
-            <StyledDiv style={{ marginBottom: "130px" }}>
+            <StyledDiv style={{ marginBottom: "50px" }}>
               <p>此用戶暫無撰寫日記！</p>
             </StyledDiv>
           )}
         </Container>
-        <Footer />
+        <div style={{ margin: " 50px 0 " }}></div>
+
+        <Footer style={{ marginTop: "20px" }} />
       </div>
     </>
   );
@@ -360,24 +197,14 @@ const Container = styled.div`
 const Button = styled.div`
   margin-top: 130px;
   text-align: right;
-
-  .button {
-    cursor: pointer;
-    font-size: 20px;
-    height: 30px;
-    width: 70px;
-    background-color: #ffffff;
-    border: none;
-    margin: 0 0 10px 10px;
-    border-radius: 10px;
-    &:hover {
-      border: 1px solid #5b5b5b;
-      background-color: #474747;
-      color: #ffffff;
-      opacity: 0.8;
-    }
+  ${({ theme }) => theme.media.tablet`
+    text-align: center;
+  `}
+  .inviteBtn {
+    margin: 0 20px 20px 0;
   }
 `;
+
 const StyledDiv = styled.div`
   padding: 20px;
   position: relative;
@@ -514,8 +341,8 @@ const InviteBox = styled.div`
     margin: 5px auto;
     vertical-align: middle;
     cursor: pointer;
-    width: 55px;
-    height: 25px;
+    width: 80px;
+    height: 30px;
     border: none;
     border-radius: 20px;
     /* box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08); */

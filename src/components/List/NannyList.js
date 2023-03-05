@@ -22,7 +22,7 @@ const NannyList = ({ setOpenInform, openInform }) => {
     if (user.uid) {
       const queryInvite = query(
         collection(db, "invitation"),
-        where("toUser.id", "==", user.uid),
+        where("toUser.uid", "==", user.uid),
         where("status", "==", "pending")
       );
       const unsubscribe = onSnapshot(queryInvite, (snapshot) => {
@@ -196,10 +196,14 @@ const Button = styled.div`
     }
   }
   .cancel {
+    width: 80px;
+    height: 30px;
     color: #ffffff;
     background-color: #fcc5c5;
   }
   .pay {
+    width: 80px;
+    height: 30px;
     color: #ffffff;
     background-color: #8bd876;
   }

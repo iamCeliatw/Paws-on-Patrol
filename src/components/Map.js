@@ -30,11 +30,10 @@ function Map({
   setUserPopups,
   userImage,
   mapId,
+  openLocation,
 }) {
   //為了防止marker不斷被渲染並閃爍 使用useMemo鎖住它
   const Markers = useMemo(() => {
-    // console.log("marker rendered!");
-    // console.log(markers);
     return (
       <>
         {markers.map((m) => {
@@ -66,6 +65,7 @@ function Map({
       />
 
       <GoogleMap
+        icon={icon}
         mapContainerStyle={containerStyle}
         center={center}
         zoom={14}
@@ -75,7 +75,7 @@ function Map({
         }}
       >
         {Markers}
-        {google && (
+        {google && openLocation && (
           <Circle
             center={center}
             radius={km ? km : 1500}

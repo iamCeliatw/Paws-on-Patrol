@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { loader } from "../assets/Loading_icon.gif";
-import { pin } from "../assets/pin.png";
 import { marker } from "../assets/marker.png";
 import { search } from "../assets/search.png";
 import { user } from "../assets/user.png";
@@ -13,13 +12,14 @@ import { profile } from "../assets/profile.png";
 import { walkdog } from "../assets/walkdog.png";
 import { FcGoogle } from "react-icons/fc";
 import { save } from "../assets/save.png";
-import { loadmouse } from "/assets/loadmouse.gif";
 import { background } from "/assets/background.png";
-import { walkingDog } from "/assets/walking-dog.png";
-import { pet } from "/assets/pet.png";
 import { kamudog } from "/assets/kamudog.png";
-import { gif1 } from "/assets/home.gif";
 import { cat } from "/assets/cat.png";
+import { gif1 } from "/assets/home.gif";
+import { gif2 } from "/assets/gif2.gif";
+import { gif3 } from "/assets/gif3.gif";
+import { pin } from "/assets/pin.gif";
+import { happydog } from "/assets/happydog.png";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   //   <React.StrictMode>

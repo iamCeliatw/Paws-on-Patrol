@@ -16,44 +16,17 @@ import { UserAuth } from "../../context/AuthContext";
 const Input = () => {
   const { data } = ChatAuth();
   const { user, text, setText, handleSend } = UserAuth();
-  //   const [text, setText] = useState("");
-  //   console.log(data);
-  //   const [image, setImage] = useState(null);
-  //   const handleSend = async () => {
-  //     await updateDoc(doc(db, "chats", data.chatId), {
-  //       messages: arrayUnion({
-  //         id: uuid(),
-  //         text,
-  //         senderId: user.uid,
-  //         date: Timestamp.now(),
-  //       }),
-  //     });
-
-  //     await updateDoc(doc(db, "userChats", user.uid), {
-  //       [data.chatId + ".lastMessage"]: {
-  //         text,
-  //       },
-  //       [data.chatId + ".date"]: serverTimestamp(),
-  //     });
-  //     await updateDoc(doc(db, "userChats", data.user.uid), {
-  //       [data.chatId + ".lastMessage"]: {
-  //         text,
-  //       },
-  //       [data.chatId + ".date"]: serverTimestamp(),
-  //     });
-  //     setText("");
-  //   };
   return (
     <Container>
       <input
         onChange={(e) => setText(e.target.value)}
         type="text"
-        placeholder="Type Something..."
+        placeholder="請輸入訊息..."
         value={text}
         onKeyPress={(e) => (e.key === "Enter" ? handleSend(data) : null)}
       />
       <Send>
-        <button onClick={() => handleSend(data)}>Send</button>
+        <button onClick={() => handleSend(data)}>送出</button>
       </Send>
     </Container>
   );
@@ -96,6 +69,7 @@ const Send = styled.div`
     color: white;
     background-color: #f0dbdb;
     cursor: pointer;
+    width: 60px;
     &:hover {
       color: #ffffff;
       background-color: #dba39a;

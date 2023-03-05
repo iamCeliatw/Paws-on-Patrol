@@ -12,7 +12,6 @@ import { doc, onSnapshot, collection, getDocs } from "firebase/firestore";
 import styled from "styled-components";
 import { ref, getDownloadURL } from "firebase/storage";
 import Loader from "../components/Loader";
-
 const Homepage = () => {
   const [isActive, setIsActive] = useState(false);
   const [km, setKm] = useState("");
@@ -29,7 +28,7 @@ const Homepage = () => {
   const [userImage, setUserImage] = useState("");
   const [userData, setUserData] = useState("");
   const [imgLoading, setImgLoading] = useState(true);
-
+  const [openLocation, setOpenLocation] = useState(false);
   const { user, setSearchUser, userselectOpen, setUserselectOpen, openInfo } =
     UserAuth();
 
@@ -40,7 +39,7 @@ const Homepage = () => {
     googleMapsApiKey: ApiKey,
     mapIds: mapId,
   });
-
+  const [showAlert, setShowAlert] = useState(false);
   const [mapInputValue, setMapInputValue] = useState("");
   const mapRef = useRef();
 
@@ -58,6 +57,7 @@ const Homepage = () => {
         .then((data) => {
           const { lat, lng } = data.results[0].geometry.location;
           setCenter({ lat, lng });
+          setOpenLocation(true);
           resolve();
         })
         .catch((e) => {
@@ -76,6 +76,7 @@ const Homepage = () => {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
+          setOpenLocation(true);
           setMapLoading(false);
         },
         (error) => {
@@ -141,7 +142,6 @@ const Homepage = () => {
       if (!km) {
         setMarkers(newMarkers); // 更新 markers 狀態
       } else {
-        // console.log(km);
         setMarkers(filterUsers(newMarkers, km, priceValue));
       }
       setUserData(data);
@@ -150,13 +150,19 @@ const Homepage = () => {
   }, [priceValue, user, km, center]);
 
   const filterUsers = (newMarkers, km, priceValue) => {
+    //     if (!openLocation) {
+    //       alert("請先開啟定位或搜尋地址");
+    //       return;
+    //     }
+    // else {
+
     return newMarkers.filter((marker) => {
       // 計算用戶與當前位置的距離
-      // 假設 currentLocation 是當前的位置
       const userLocation = new window.google.maps.LatLng(
         marker.lat,
         marker.lng
       );
+
       const distance =
         window.google.maps.geometry.spherical.computeDistanceBetween(
           center,
@@ -168,6 +174,7 @@ const Homepage = () => {
       return false;
     });
   };
+  // }
 
   const getClickedUser = async (marker, e) => {
     setIsActive(true);
@@ -184,7 +191,6 @@ const Homepage = () => {
           setImgLoading(false);
         })
         .catch((error) => {
-          console.error("Error fetching image:", error);
           setUserImage("");
           setImgLoading(false);
         });
@@ -198,9 +204,21 @@ const Homepage = () => {
     );
   const icon = { url: "marker.png", scaledSize: { width: 40, height: 40 } };
   return (
-    <>
-      <OverLay openLogin={openLogin} openSignup={openSignup}></OverLay>
-      <div style={{ position: "relative" }}>
+    <div style={{ overflow: "hidden" }}>
+      {showAlert && (
+        <Alert>
+          <p>請開啟定位或輸入搜尋地點</p>
+          <button onClick={() => setShowAlert(false)}>確認</button>
+        </Alert>
+      )}
+      <OverLay
+        showAlert={showAlert}
+        openLogin={openLogin}
+        openSignup={openSignup}
+      ></OverLay>
+      <div
+        style={{ position: "relative", overflow: "hidden", minHeight: "100vh" }}
+      >
         <Nav
           userselectOpen={userselectOpen}
           setUserselectOpen={setUserselectOpen}
@@ -211,6 +229,7 @@ const Homepage = () => {
           setOpenLogin={setOpenLogin}
         />
         <Map
+          openLocation={openLocation}
           imgLoading={imgLoading}
           isActive={isActive}
           setIsActive={setIsActive}
@@ -232,6 +251,9 @@ const Homepage = () => {
           google={window.google}
         />
         <LeftSideBar
+          showAlert={showAlert}
+          setShowAlert={setShowAlert}
+          openLocation={openLocation}
           openFilterBar={openFilterBar}
           setOpenFilterBar={setOpenFilterBar}
           mapInputValue={mapInputValue}
@@ -275,19 +297,22 @@ const Homepage = () => {
       <HomeFooter>
         Copyright © 2023 Paws on Patrol. All rights reserved.
       </HomeFooter>
-    </>
+    </div>
   );
 };
 
 const HomeFooter = styled.div`
   width: 100%;
   position: absolute;
-  bottom: 0%;
   background-color: rgba(255, 255, 255, 0.9);
   z-index: 1;
   height: 50px;
+  margin-top: -50px;
   text-align: center;
   line-height: 50px;
+  ${({ theme }) => theme.media.mobile`
+font-size: 13px;
+  `}
 `;
 const OverLay = styled.div`
   backdrop-filter: blur(2px);
@@ -297,7 +322,33 @@ const OverLay = styled.div`
   height: 100%;
   z-index: 2;
   display: ${(props) =>
-    props.openSignup || props.openLogin ? "flex" : "none"}; ;
+    props.openSignup || props.openLogin || props.showAlert ? "flex" : "none"}; ;
 `;
-
+const Alert = styled.div`
+  padding: 5px 10px;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 300px;
+  background-color: #c1c1c1;
+  color: #ffffff;
+  border-radius: 5px;
+  text-align: center;
+  button {
+    cursor: pointer;
+    background-color: #ffffff;
+    color: gray;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 10px;
+    &:hover {
+      background-color: #c1c1c1;
+      color: #ffffff;
+      border: 1px solid #ffffff;
+    }
+  }
+`;
 export default Homepage;

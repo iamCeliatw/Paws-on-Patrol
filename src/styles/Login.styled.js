@@ -41,10 +41,17 @@ export const StyledLogin = styled.div`
       text-align: left;
     }
     input {
-      padding-left: 5px;
       width: 100%;
       height: 30px;
       margin-bottom: 10px;
+      padding: 5px;
+      border: 2px solid rgba(255, 255, 255, 0.578);
+      background-color: rgba(238, 238, 238, 0.578);
+      border-radius: 5px;
+      &:focus {
+        outline: none;
+        border: 1px solid #696fff;
+      }
     }
   }
   .question-text {
@@ -62,8 +69,7 @@ export const StyledLogin = styled.div`
     /* border-radius: 5px; */
     /* border: #5b5b5b solid 1px; */
     &:hover {
-      color: #fff;
-      background-color: #696fff;
+      color: #696fff;
     }
   }
   /* .or-divider {
