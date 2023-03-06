@@ -52,10 +52,11 @@ const Reserve = () => {
 
   const handleInvite = async () => {
     const inviteUserRef = await getDoc(doc(db, "invitation", user.uid));
+    console.log(inviteUserRef.data().toUser.uid === id);
     if (
       inviteUserRef.exists() &&
       inviteUserRef.data().status === "pending" &&
-      inviteUserRef.data().fromUser.id === user.uid
+      inviteUserRef.data().toUser.uid === id
     ) {
       alert("您已正在邀請此用戶");
       return;
@@ -63,7 +64,7 @@ const Reserve = () => {
       inviteUserRef.exists() &&
       inviteUserRef.data().status === "pending"
     ) {
-      alert("您已邀請一位用戶，若想更改請至媒合狀態取消目前邀請");
+      alert("正在邀請其他用戶，若想更改請至媒合狀態取消目前邀請");
       return;
     }
     await setDoc(doc(db, "invitation", user.uid), {
@@ -150,7 +151,7 @@ const Reserve = () => {
           </StyledDiv>
           <Title>關於我</Title>
           <StyledDiv>
-            <p>{memberData.aboutme}</p>
+            <p>{memberData.aboutme || "暫無介紹"}</p>
           </StyledDiv>
 
           <Title>我的保姆日記</Title>
@@ -224,6 +225,8 @@ const StyledDiv = styled.div`
     word-wrap: break-word;
     padding: 0px 5px;
     font-size: 15px;
+    margin-right: 10px;
+    text-align: center;
     width: auto;
     height: 20px;
     border-radius: 20px;

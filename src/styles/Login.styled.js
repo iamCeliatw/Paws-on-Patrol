@@ -10,7 +10,7 @@ export const Container = styled.div`
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.background};
   display: flex;
-  z-index: 3;
+  z-index: 4;
   .close {
     cursor: pointer;
     font-size: 20px;

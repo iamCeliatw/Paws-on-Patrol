@@ -1,10 +1,10 @@
 # Paws on Patrol
 
 <p align='center'> 
-<img width='200px' src="./Logo.jpg" />
+<img width='300px' src="./Logo.jpg" />
 <p>
 
-Paws on Patrol is a platform that utilizes location-based services to help users find nearby pet sitters. It allows for one-to-one online chat and online payment between pet sitters and pet owners.
+Paws on Patrol is a platform that utilizes Google Maps API to provide location-based services, helping users find nearby pet sitters. It allows for one-to-one online chat and online payment between pet sitters and pet owners.
 <br/>
 <br/>
 Website URL: https://paws-on-patrol.firebaseapp.com
@@ -15,19 +15,23 @@ Test Account:
 | --------------- | -------- |
 | test@test.com | test123 |
 
+Test Card:
+| Card number | Expiry | CVC |
+| --------------- | -------- | -------- |
+| 4242 4242 4242 4242 | 12/23 | 123 |
+
 <br/>
 <br/>
 
 ## Table of Contents
 
+---
+
 - [Paws on Patrol](#paws-on-patrol)
   - [Table of Contents](#table-of-contents)
-  - [Main Features](#main-features)
-    - [Location-based services through Google Maps API to help users find nearby pet sitters](#location-based-services-through-google-maps-api-to-help-users-find-nearby-pet-sitters)
-    - [Usereducer state management for chat room functionality, allowing users to chat with pet sitters in real-time](#usereducer-state-management-for-chat-room-functionality-allowing-users-to-chat-with-pet-sitters-in-real-time)
-    - [Secure online payment transactions through integration with Stripe](#secure-online-payment-transactions-through-integration-with-stripe)
+  - [✤ Tech Stack](#-tech-stack)
+  - [✤ Main Features](#-main-features)
   - [✤ Front-end Technique](#-front-end-technique)
-    - [Tech Stack](#tech-stack)
     - [React](#react)
       - [Component Structure:](#component-structure)
     - [React Router](#react-router)
@@ -39,42 +43,40 @@ Test Account:
     - [Firebase Hosting](#firebase-hosting)
     - [Firebase Functions](#firebase-functions)
   - [✤ Third Party Library](#-third-party-library)
-    - [Google Maps JavaScript API](#google-maps-javascript-api)
+  - [✤ Third Party Payment Gateway](#-third-party-payment-gateway)
     - [Others](#others)
   - [Contact](#contact)
 
-## Main Features
+## ✤ Tech Stack
+
+<br>
+<img width='300px' src="./Tech-stack.png" />
+
+## ✤ Main Features
 
 ---
 
-### Location-based services through Google Maps API to help users find nearby pet sitters
-
--
-
-### Usereducer state management for chat room functionality, allowing users to chat with pet sitters in real-time
-
--
-
-### Secure online payment transactions through integration with Stripe
-
--
+1. Deploying Stripe's third-party payment function using Firebase Cloud Functions and calling it in React.
+2. Managing member and invitee data through global shared props using useContext.
+3. Implementing a chat room with useReducer to manage state and component behavior.
+4. Integrating third-party library React Google Maps API.
+5. Advanced filtering allows users to find the most suitable pet sitter by price and distance.
+6. Responsive web design allows users to search for nearby users anytime, anywhere.
+7. Achieving real-time updates on matching status through Firestore onSnapshot.
 
 ## ✤ Front-end Technique
 
-### Tech Stack
-
-放架構圖照片
-![](photourl)
+---
 
 ### React
 
 - SPA with functional components.
-- Used hooks: `useState`, `useEffect`, `useRef`, `useContext`.
+- Used hooks: `useState`, `useEffect`, `useRef`, `useContext`, `useReducer`.
 
 #### Component Structure:
 
 &nbsp;
-放照片
+組件結構
 ![]()
 
 ### React Router
@@ -111,7 +113,11 @@ Test Account:
 
 ## ✤ Third Party Library
 
-### Google Maps JavaScript API
+- Google Maps JavaScript API
+
+## ✤ Third Party Payment Gateway
+
+- Stripe
 
 ### Others
 

@@ -45,7 +45,7 @@ const Account = () => {
   const [tagInputValue, setTagInputValue] = useState("");
 
   const [dirty, setDirty] = useState(false);
-
+  const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
   const {
     user,
     marker,

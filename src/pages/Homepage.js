@@ -33,7 +33,7 @@ const Homepage = () => {
     UserAuth();
 
   const [openFilterBar, setOpenFilterBar] = useState(false);
-
+  const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
   const mapId = ["df9fc52cd73ef254"];
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: ApiKey,
@@ -320,7 +320,7 @@ const OverLay = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  z-index: 3;
   display: ${(props) =>
     props.openSignup || props.openLogin || props.showAlert ? "flex" : "none"}; ;
 `;

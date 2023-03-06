@@ -86,7 +86,7 @@ const Container = styled.div`
   position: absolute;
   right: 0;
   top: 20%;
-  z-index: 1;
+  z-index: 2;
   background-color: #ffffff;
   /* box-shadow: 0 4px 20px 0 rgb(0 0 0 / 18%); */
   opacity: ${(props) => (props.isActive ? 1 : 0)};
