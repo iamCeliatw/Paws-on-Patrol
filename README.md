@@ -50,7 +50,7 @@ Test Card:
 ## ✤ Tech Stack
 
 <br>
-<img width='300px' src="./Tech-stack.png" />
+<img width='300px' src="./tech-stack.png" />
 
 ## ✤ Main Features
 
