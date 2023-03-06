@@ -50,11 +50,9 @@ Test Card:
 ## ✤ Tech Stack
 
 <br>
-<img width='300px' src="./tech-stack.png" />
+<img width='700px' src="./tech-stack.png" />
 
 ## ✤ Main Features
-
----
 
 1. Deploying Stripe's third-party payment function using Firebase Cloud Functions and calling it in React.
 2. Managing member and invitee data through global shared props using useContext.
@@ -65,8 +63,6 @@ Test Card:
 7. Achieving real-time updates on matching status through Firestore onSnapshot.
 
 ## ✤ Front-end Technique
-
----
 
 ### React
 
