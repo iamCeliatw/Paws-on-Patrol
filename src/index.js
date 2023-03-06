@@ -4,7 +4,6 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { loader } from "../assets/Loading_icon.gif";
 import { marker } from "../assets/marker.png";
-import { search } from "../assets/search.png";
 import { user } from "../assets/user.png";
 import { paw } from "../assets/paw.png";
 import { logout } from "../assets/logout.png";

@@ -52,7 +52,6 @@ const Reserve = () => {
 
   const handleInvite = async () => {
     const inviteUserRef = await getDoc(doc(db, "invitation", user.uid));
-    console.log(inviteUserRef.data().toUser.uid === id);
     if (
       inviteUserRef.exists() &&
       inviteUserRef.data().status === "pending" &&

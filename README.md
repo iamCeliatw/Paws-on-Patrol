@@ -21,11 +21,12 @@ Test Card:
 | 4242 4242 4242 4242 | 12/23 | 123 |
 
 <br/>
+
+<img  src="./demo.gif" />
+
 <br/>
 
 ## Table of Contents
-
----
 
 - [Paws on Patrol](#paws-on-patrol)
   - [Table of Contents](#table-of-contents)
