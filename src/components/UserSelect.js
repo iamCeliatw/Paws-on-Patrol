@@ -71,7 +71,7 @@ export default UserSelect;
 
 const Container = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: 5;
   top: 10%;
   right: 100px;
   width: 200px;
@@ -95,6 +95,7 @@ const Container = styled.div`
   `}
   ${({ theme }) => theme.media.mobile`
    right: 10px;
+   
       `}
   ul {
     text-align: center;

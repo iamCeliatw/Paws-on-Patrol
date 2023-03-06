@@ -21,8 +21,8 @@ const Login = ({
   onClose,
 }) => {
   const style = { fontSize: "1.2em", verticalAlign: "sub" };
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
+  const [loginEmail, setLoginEmail] = useState("test@test.com");
+  const [loginPassword, setLoginPassword] = useState("test123");
   const [showMessage, setShowMessage] = useState(false);
   const { signin, setIsLogin, errorMessage, setErrorMessage } = UserAuth();
   const navigate = useNavigate();
@@ -85,6 +85,7 @@ const Login = ({
                 setLoginEmail(e.target.value);
               }}
               type="text"
+              value={loginEmail}
             />
             <p>Password</p>
             <input
@@ -92,6 +93,7 @@ const Login = ({
                 setLoginPassword(e.target.value);
               }}
               type="password"
+              value={loginPassword}
             />
           </div>
           <SignButton onClick={loginHandler}>Login</SignButton>

@@ -95,4 +95,5 @@ exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
     .catch((error) => {
       console.error("Error updating document: ", error);
     });
+  return res.sendStatus(200);
 });

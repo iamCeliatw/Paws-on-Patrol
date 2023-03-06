@@ -39,12 +39,13 @@ const Account = () => {
   const [mypreview, setMyPreview] = useState("");
   const [photoUpload, setPhotoUpload] = useState("");
   const [photoURL, setPhotoURL] = useState(null);
+  const [getNewMarker, setGetNewMarker] = useState(false);
   //tag
   const [tags, setTags] = useState([]);
   const [tagInputValue, setTagInputValue] = useState("");
 
   const [dirty, setDirty] = useState(false);
-
+  const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
   const {
     user,
     marker,
@@ -104,6 +105,15 @@ const Account = () => {
     };
   }, [dirty]);
 
+  useEffect(() => {
+    if (!getNewMarker) {
+      return;
+    }
+    if (marker && getNewMarker === true) {
+      addUserData();
+    }
+  }, [marker]);
+
   //tag change and save
   const handleInputChange = (event) => {
     setTagInputValue(event.target.value);
@@ -126,51 +136,24 @@ const Account = () => {
     setDirty(true);
   };
 
-  //   根據填入地址 定位經緯度
-  //   const LocationHandler = async () => {
-  //     return new Promise((resolve, reject) => {
-  //       fetch(
-  //         `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${ApiKey}`
-  //       )
-  //         .then((res) => res.json())
-  //         .then((data) => {
-  //           const { lat, lng } = data.results[0].geometry.location;
-  //           console.log({ lat, lng });
-  //           console.log("completed");
-  //           setMarker({ lat, lng });
-  //           resolve();
-  //         })
-  //         .catch((e) => {
-  //           alert(`取得地理位置失敗：${e.message}`);
-  //           reject(e);
-  //         });
-  //     });
-  //   };
-
   const LocationHandler = async () => {
     try {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${ApiKey}`
       );
       const data = await response.json();
-      const { lat, lng } = data.results[0].geometry.location;
-      console.log({ lat, lng });
-      await setMarker({ lat, lng });
-      console.log("地址已更新");
 
-      return { lat, lng };
+      const { lat, lng } = data.results[0].geometry.location;
+      setMarker({ lat, lng });
+      setGetNewMarker(true);
     } catch (error) {
       console.log(error);
       alert(`取得地理位置失敗：${error.message}`);
+      alert("找不到地址");
       throw error;
     }
   };
-  const handleInputConfirm = async () => {
-    if (addressValue) {
-      await LocationHandler();
-      alert("地址已更新,請記得儲存您的會員資訊");
-    }
-  };
+
   // 按下save觸發
   const userSubmit = async () => {
     if (!addressValue) {
@@ -183,8 +166,8 @@ const Account = () => {
     try {
       await LocationHandler();
       await addUserData();
-      console.log("success!");
       alert("更新成功");
+      setDirty(false);
     } catch (e) {
       alert("something went wrong:", e.message);
     }
@@ -204,6 +187,7 @@ const Account = () => {
         profileURL: profileImage || "",
         tags: tags || "",
       });
+      setGetNewMarker(false);
       if (imageUpload) {
         await addProfileImg();
       }
@@ -216,9 +200,7 @@ const Account = () => {
     //上傳到storage
     const imageRef = ref(storage, `${uid}/profile`);
     await uploadBytes(imageRef, imageUpload);
-    alert("image uploaded!");
     const profileImage = await getProfileImage();
-    console.log("profileimg,", profileImage);
     //新增到資料庫
     const docRef = doc(db, "user", uid);
     await updateDoc(docRef, {
@@ -228,7 +210,6 @@ const Account = () => {
       photoURL: profileImage,
       displayName: nameValue,
     });
-    console.log("DONE");
   };
   //when press get now address
   const getNowAddress = async () => {
@@ -277,7 +258,6 @@ const Account = () => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       let userdata = docSnap.data();
-      console.log(userdata);
       setAddressValue(userdata.address);
       setMarker(userdata.place);
       setNameValue(userdata.name);
@@ -309,7 +289,6 @@ const Account = () => {
   };
 
   const handleDelete = async (index) => {
-    console.log(index);
     if (index === 0 && diaries.length === 1) {
       return;
     }
@@ -324,7 +303,6 @@ const Account = () => {
     <>
       <ScrollTopButton />
       <Container>
-        <SaveButton onClick={userSubmit}>儲存</SaveButton>
         <Nav />
         <StyledAccount>
           <MarginBox>
@@ -372,18 +350,17 @@ const Account = () => {
                     id="addressValue"
                     type="text"
                     placeholder={
-                      getAddress ? "取得中..." : "請輸入具體提供服務地點"
+                      getAddress ? "取得中..." : "輸入完成請按變更地址"
                     }
                     onChange={(e) => {
                       setAddressValue(e.target.value);
                       setDirty(true);
                     }}
-                    // onBlur={handleInputBlur}s
                   />
                 </div>
-                <button className="confirmButton" onClick={handleInputConfirm}>
+                {/* <button className="confirmButton" onClick={handleInputConfirm}>
                   變更地址
-                </button>
+                </button> */}
                 <div>
                   <SubTitle>價格</SubTitle>
                   <input
@@ -442,6 +419,7 @@ const Account = () => {
                 </span>
               ))}
               <InputPlace
+                placeholder="按下Enter即可生成個人關鍵字"
                 className="tagInput"
                 type="text"
                 value={tagInputValue}
@@ -474,6 +452,13 @@ const Account = () => {
               <button onClick={handleAddDiary} className="diaryButton">
                 新增日記
               </button>
+              <SaveButton
+                onClick={() => {
+                  userSubmit();
+                }}
+              >
+                儲存
+              </SaveButton>
             </Button>
           </MarginBox>
         </StyledAccount>

@@ -6,14 +6,13 @@ import InviteList from "../components/List/InviteList";
 import NannyList from "../components/List/NannyList";
 
 const List = () => {
-  const { userselectOpen, openInfo } = UserAuth();
+  const { userselectOpen, openInfo, bellMessage } = UserAuth();
   const items = ["邀請列表", "客戶列表"];
   const [activeItem, setActiveItem] = useState(0);
   const [openInform, setOpenInform] = useState(false);
   return (
     <>
       <OverLay openInform={openInform} />
-
       <InformBox openInform={openInform}>
         <b>已接受邀請，請至歷史訂單查詢客戶付款狀態</b>
         <button className="btn" onClick={() => setOpenInform(false)}>
@@ -24,7 +23,7 @@ const List = () => {
       <Container>
         <MarginBox>
           <TopBar activeItem={activeItem}>
-            <div>
+            <div style={{ position: "relative" }}>
               <ul>
                 {items.map((item, index) => (
                   <li
@@ -34,6 +33,11 @@ const List = () => {
                     onClick={() => setActiveItem(index)}
                   >
                     {item}
+                    {bellMessage && index === 1 && (
+                      <div className="redMessage">
+                        <i className="unread-point"></i>
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -73,9 +77,12 @@ const TopBar = styled.div`
     cursor: pointer;
   }
   ul {
+    position: relative;
     display: flex;
     justify-content: space-evenly;
+
     .listItem {
+      display: flex;
       padding: 10px 5px;
       list-style: none;
       position: relative;
@@ -96,6 +103,17 @@ const TopBar = styled.div`
         display: flex;
         color: #d5897e;
       }
+      .redMessage {
+        .unread-point {
+          display: block;
+          background: #f23436;
+          border-radius: 50%;
+          width: 6px;
+          height: 6px;
+          top: 8px;
+          right: 140px;
+        }
+      }
     }
   }
 `;
@@ -114,14 +132,14 @@ const OverLay = styled.div`
   z-index: 2;
   display: ${(props) => (props.openInform ? "block" : "none")}; ;
 `;
-const InformBox = styled.div`
+export const InformBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
   width: 300px;
-  height: 100px;
+  height: fit-content;
   background-color: #ffffff;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
   z-index: 2;
@@ -129,19 +147,20 @@ const InformBox = styled.div`
   transform: translate(-50%, -50%);
   top: 45%;
   left: 50%;
+  padding: 15px;
   display: ${(props) => (props.openInform ? "flex" : "none")};
 
   .btn {
     margin: 5px auto;
     vertical-align: middle;
     cursor: pointer;
-    width: 55px;
-    height: 25px;
     border: none;
     border-radius: 20px;
     /* box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08); */
     background-color: #aaa;
     color: white;
+    width: 80px;
+    height: 30px;
     &:hover {
       opacity: 0.6;
     }

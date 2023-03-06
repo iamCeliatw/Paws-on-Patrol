@@ -11,7 +11,9 @@ export const StyledAccount = styled.div`
 `;
 
 export const MarginBox = styled.div`
-  margin: 200px auto 100px auto;
+  display: flex;
+  flex-direction: column;
+  margin: 160px auto 80px auto;
   width: 60%;
   min-height: 100vh;
   ${({ theme }) => theme.media.tablet`
@@ -158,6 +160,10 @@ export const StyledLabel = styled.label`
 export const SubTitle = styled.p`
   font-size: 16px;
   margin: 10px;
+  ${({ theme }) => theme.media.tablet`
+  
+  padding: 0 10px;
+  `}
 `;
 export const InputPlace = styled.input`
   margin: 0 10px;
@@ -185,7 +191,7 @@ export const InputPlace = styled.input`
 
 export const Title = styled.h3`
   color: #5b5b5b;
-  margin: 10px 0px;
+  margin: 15px 10px;
 `;
 
 export const Keyword = styled.div`
@@ -196,7 +202,7 @@ export const Keyword = styled.div`
   .tag {
     display: inline-block;
     word-wrap: break-word;
-    margin: 0 5px;
+    margin: 10px;
     padding: 5px 12px;
     width: auto;
     border-radius: 20px;
@@ -212,7 +218,7 @@ export const Keyword = styled.div`
     }
   }
   .tagInput {
-    margin: 5px;
+    margin: 15px 0;
   }
 
   .icon {
@@ -247,6 +253,7 @@ export const Button = styled.div`
   display: flex;
   justify-content: center;
   .diaryButton {
+    margin-right: 20px;
     border: none;
     color: #5b5b5b;
     background-color: #ffffff;
@@ -270,18 +277,15 @@ export const AboutmeInput = styled(InputPlace)`
 `;
 export const SaveButton = styled.button`
   text-align: center;
-  position: absolute;
-  right: 20%;
-  top: 18%;
-  font-size: 20px;
   background-color: #ffffff;
   border: none;
   color: #5b5b5b;
   width: 90px;
+  font-size: 15px;
   height: 40px;
   border-radius: 30px;
   box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
-  ${({ theme }) => theme.media.tablet`
+  /* ${({ theme }) => theme.media.tablet`
      background-image: url(save.png);
     background-repeat: no-repeat;
     background-position: center;
@@ -291,7 +295,7 @@ export const SaveButton = styled.button`
     width: 35px;
     height: 35px;
     right: 5%;
-    `}
+    `} */
   cursor: pointer;
   &:hover {
     background-color: #5b5b5b;

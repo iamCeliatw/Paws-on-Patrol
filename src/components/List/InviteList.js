@@ -64,7 +64,7 @@ const InviteList = () => {
     setPaymentLoading(true);
     const userId = user.uid;
     const price = inviteData.price;
-    const memberId = inviteData["toUser"]["id"];
+    const memberId = inviteData["toUser"]["uid"];
     const filterPrice = parseInt(price.replace(/[^0-9]/gi, ""), 10);
     const stripe = await loadStripe(
       "pk_test_51MZSBHAx03PMdijSJDe1PlZn8fiWwVlA1xee0ipHioQXQTRSZvEah09XZR80PxSrExr7ykyVMwhWWpFzYu1mAoYC00VlECtoVk"
@@ -100,7 +100,6 @@ const InviteList = () => {
           const querySnapshot = await getDocs(queryInvite);
           querySnapshot.forEach((doc) => {
             const data = doc.data();
-            console.log(data["toUser"]["name"]);
             setInviteData(data);
           });
         }
@@ -130,7 +129,7 @@ const InviteList = () => {
                 <img
                   src={
                     inviteData && inviteData["toUser"] && status
-                      ? inviteData["toUser"]["photoURL"]
+                      ? inviteData["toUser"]["profileURL"]
                       : "user.png"
                   }
                   alt=""
@@ -164,8 +163,10 @@ const InviteList = () => {
                       >
                         立即付款
                       </button>
-
-                      <button className="btn" onClick={() => deleteInvite()}>
+                      <button
+                        className="btn cancel"
+                        onClick={() => deleteInvite()}
+                      >
                         取消
                       </button>
                     </div>
@@ -234,10 +235,14 @@ const Button = styled.div`
     }
   }
   .cancel {
+    width: 80px;
+    height: 30px;
     color: #ffffff;
     background-color: #fcc5c5;
   }
   .pay {
+    width: 80px;
+    height: 30px;
     color: #ffffff;
     background-color: #8bd876;
   }

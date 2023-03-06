@@ -43,21 +43,29 @@ const NannyHistory = () => {
                 <div className="img-div">
                   <img src={i["clientPhotoURL"] || "user.png"} alt="" />
                 </div>
-                <div>
+                <div className="text-detail">
                   <b>保姆名稱：{i["clientName"]}</b>
                   <p>價格：{i["amount"]}</p>
                   <p>交易日期： {i["date"].toLocaleString()}</p>
                 </div>
               </div>
-              <div>
-                <b>
-                  訂單狀態:
-                  {i["paymentStatus"] === "paid"
-                    ? "已付款"
-                    : i["paymentStatus"] === "declined"
-                    ? "訂單已取消"
-                    : "未付款"}
-                </b>
+              <div className="payStatus">
+                <p>
+                  訂單狀態：
+                  {i["paymentStatus"] === "paid" ? (
+                    <span style={{ color: "green", fontWeight: "bold" }}>
+                      已付款
+                    </span>
+                  ) : i["paymentStatus"] === "declined" ? (
+                    <span style={{ color: "red", fontWeight: "bold" }}>
+                      訂單已取消
+                    </span>
+                  ) : (
+                    <span style={{ color: "orange", fontWeight: "bold" }}>
+                      未付款
+                    </span>
+                  )}
+                </p>
               </div>
             </List>
           ))
@@ -73,19 +81,35 @@ const Container = styled.div`
   height: 100%;
   border-radius: 5px;
   border: 1px solid #8e8e8e;
+
+  ${({ theme }) => theme.media.tablet`
+font-size: 15px;
+  `}
 `;
 const List = styled.div`
-  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #dedede;
   padding: 10px 5px;
+  ${({ theme }) => theme.media.tablet`
+ flex-direction: column;
+ align-items:center;
+  `}
   .leftDetail {
     display: flex;
     align-items: center;
-    width: 350px;
+    width: auto;
     justify-content: space-evenly;
+    ${({ theme }) => theme.media.tablet`
+    text-align: center;
+ flex-direction: column;
+ align-items:center;
+  `}
+    .text-detail {
+      line-height: 22px;
+      margin-left: 10px;
+    }
     .img-div {
       width: 60px;
       height: 60px;

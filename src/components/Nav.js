@@ -26,40 +26,19 @@ const Nav = ({ setOpenSignup, setOpenLogin, setCloseModal }) => {
     setOpenInfo,
   } = UserAuth();
   const selectRef = useRef();
-  //   useEffect(() => {
-  //     const getinviteRef = async () => {
-  //       if (user && user.uid) {
-  //         const unsub = onSnapshot(doc(db, "invitation", user.uid), (doc) => {
-  //           if (doc.data() && doc.data().status === "accept") {
-  //             setBellMessage(false);
-  //           } else if (doc.data() && doc.data().status === "pending") {
-  //             setBellMessage(true);
-  //           } else return;
-  //         });
-  //         return () => {
-  //           unsub();
-  //         };
-  //       }
-  //     };
-  //     if (user) {
-  //       getinviteRef();
-  //     }
-  //   }, [user]);
 
   useEffect(() => {
-    console.log(11);
     const getInviteStatus = async () => {
       if (user && user.uid) {
         const q = query(
           collection(db, "invitation"),
-          where("toUser.id", "==", user.uid),
+          where("toUser.uid", "==", user.uid),
           where("status", "==", "pending")
         );
         const unsubscribe = onSnapshot(q, (snapshot) => {
           const unreadMessages = snapshot.docs.filter(
             (doc) => doc.data().status === "pending"
           );
-          console.log(unreadMessages);
           setBellMessage(unreadMessages.length > 0);
         });
         return () => {
@@ -77,7 +56,6 @@ const Nav = ({ setOpenSignup, setOpenLogin, setCloseModal }) => {
   };
 
   const handleClickOutside = (e) => {
-    console.log(selectRef.current);
     if (
       selectRef.current &&
       !selectRef.current.contains(e.target) &&
@@ -88,9 +66,9 @@ const Nav = ({ setOpenSignup, setOpenLogin, setCloseModal }) => {
   };
 
   //防止點擊過快造成的過度渲染
-  //   const handleOpenInfo = debounce(() => {
-  //     setOpenInfo(!openInfo);
-  //   }, 200);
+  // const handleOpenInfo = debounce(() => {
+  //   setOpenInfo(!openInfo);
+  // }, 200);
 
   return (
     <>

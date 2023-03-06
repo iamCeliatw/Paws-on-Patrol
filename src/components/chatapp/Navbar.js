@@ -40,5 +40,9 @@ const Container = styled.div`
       border-radius: 50%;
       object-fit: cover;
     }
+    span {
+      line-height: 24px;
+      font-size: 20px;
+    }
   }
 `;
