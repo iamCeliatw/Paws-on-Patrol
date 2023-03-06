@@ -34,7 +34,6 @@ Test Card:
   - [✤ Main Features](#-main-features)
   - [✤ Front-end Technique](#-front-end-technique)
     - [React](#react)
-      - [Component Structure:](#component-structure)
     - [React Router](#react-router)
     - [Webpack \& Babel](#webpack--babel)
   - [✤ Back-end Technique (Firebase Cloud Services)](#-back-end-technique-firebase-cloud-services)
@@ -69,12 +68,6 @@ Test Card:
 
 - SPA with functional components.
 - Used hooks: `useState`, `useEffect`, `useRef`, `useContext`, `useReducer`.
-
-#### Component Structure:
-
-&nbsp;
-組件結構
-![]()
 
 ### React Router
 
