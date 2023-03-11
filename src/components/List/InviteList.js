@@ -128,9 +128,12 @@ const InviteList = () => {
               <div className="img-div">
                 <img
                   src={
-                    inviteData && inviteData["toUser"] && status
+                    inviteData &&
+                    inviteData["toUser"] &&
+                    inviteData["toUser"]["profileURL"] !== "" &&
+                    status
                       ? inviteData["toUser"]["profileURL"]
-                      : "user.png"
+                      : "/user.png"
                   }
                   alt=""
                 />

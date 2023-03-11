@@ -5,8 +5,6 @@ import styled from "styled-components";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { UserAuth } from "../context/AuthContext";
-// import UserSelect from "../components/UserSelect";
-// import Info from "../components/Info";
 const Chatbox = () => {
   const { userselectOpen, setUserselectOpen, openInfo, setOpenInfo } =
     UserAuth();

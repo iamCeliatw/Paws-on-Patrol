@@ -104,6 +104,8 @@ Test Card:
 ## ✤ Third Party Library
 
 - Google Maps JavaScript API
+  - Maps JavaScript API
+  - Geocoding API
 
 ## ✤ Third Party Payment Gateway
 

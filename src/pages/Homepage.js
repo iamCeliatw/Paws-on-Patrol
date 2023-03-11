@@ -150,12 +150,6 @@ const Homepage = () => {
   }, [priceValue, user, km, center]);
 
   const filterUsers = (newMarkers, km, priceValue) => {
-    //     if (!openLocation) {
-    //       alert("請先開啟定位或搜尋地址");
-    //       return;
-    //     }
-    // else {
-
     return newMarkers.filter((marker) => {
       // 計算用戶與當前位置的距離
       const userLocation = new window.google.maps.LatLng(
@@ -174,7 +168,6 @@ const Homepage = () => {
       return false;
     });
   };
-  // }
 
   const getClickedUser = async (marker, e) => {
     setIsActive(true);
