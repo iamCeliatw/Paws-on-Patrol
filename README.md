@@ -33,6 +33,7 @@ Test Card:
   - [✤ Tech Stack](#-tech-stack)
   - [✤ Main Features](#-main-features)
   - [✤ Front-end Technique](#-front-end-technique)
+    - [Components Planning](#components-planning)
     - [React](#react)
     - [React Router](#react-router)
     - [Webpack \& Babel](#webpack--babel)
@@ -63,6 +64,13 @@ Test Card:
 7. Achieving real-time updates on matching status through Firestore onSnapshot.
 
 ## ✤ Front-end Technique
+
+### Components Planning
+
+<br/>
+<p> 
+<img src="./components.png" />
+<p>
 
 ### React
 
