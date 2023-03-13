@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import {
   StyledLogin,
@@ -9,17 +7,7 @@ import {
   SignButton,
   ErrorMessage,
 } from "../styles/Login.styled";
-import { FcGoogle } from "react-icons/fc";
-import { auth } from "../firebase.config";
-const Login = ({
-  onSwitch,
-  closeModal,
-  setOpenSignup,
-  setOpenLogin,
-  openLogin,
-  setCloseModal,
-  onClose,
-}) => {
+const Login = ({ onSwitch, setOpenLogin, openLogin, onClose }) => {
   const style = { fontSize: "1.2em", verticalAlign: "sub" };
   const [loginEmail, setLoginEmail] = useState("test@test.com");
   const [loginPassword, setLoginPassword] = useState("test123");
@@ -76,7 +64,7 @@ const Login = ({
         </button>
         <StyledLogin>
           <div className="title">
-            <h2>Welcome Back!</h2>
+            <h2>歡迎回來！</h2>
           </div>
           <div className="form">
             <p>Email</p>
@@ -87,7 +75,7 @@ const Login = ({
               type="text"
               value={loginEmail}
             />
-            <p>Password</p>
+            <p>密碼</p>
             <input
               onChange={(e) => {
                 setLoginPassword(e.target.value);
@@ -96,11 +84,11 @@ const Login = ({
               value={loginPassword}
             />
           </div>
-          <SignButton onClick={loginHandler}>Login</SignButton>
+          <SignButton onClick={loginHandler}>登入</SignButton>
           <p className="question-text">
-            Don't have any account?
+            還沒有帳號嗎？
             <button className="changePop" onClick={onSwitch}>
-              sign up
+              點我註冊
             </button>
           </p>
           {showMessage && errorMessage && (

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Homepage";
 import Main from "./pages/Main";
-import SignupPage from "./pages/SignupPage";
 import Chatbox from "./pages/Chatbox";
 import GlobslStyles from "./styles/Global";
 import { ThemeProvider } from "styled-components";
@@ -49,7 +48,6 @@ function App() {
             <GlobslStyles />
             <Routes>
               <Route path="/" element={<Main />} />
-              <Route path="/Signup" element={<SignupPage />} />
               <Route path="/Home" element={<HomePage />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/Account" element={<Account />} />

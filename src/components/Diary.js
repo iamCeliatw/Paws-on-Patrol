@@ -151,10 +151,6 @@ const StyledDiv = styled.div`
     text-align: center;
  `}
 
-  .diary-img {
-    /* width: 40%; */
-  }
-
   .upload_cover {
     margin-top: 25px;
     width: 100%;

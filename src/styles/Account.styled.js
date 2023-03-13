@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  /* position: relative; */
-`;
+export const Container = styled.div``;
 
 export const StyledAccount = styled.div`
   margin: auto;
@@ -285,17 +283,6 @@ export const SaveButton = styled.button`
   height: 40px;
   border-radius: 30px;
   box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
-  /* ${({ theme }) => theme.media.tablet`
-     background-image: url(save.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50% 50%;
-    padding: 20px;
-    font-size: 0;
-    width: 35px;
-    height: 35px;
-    right: 5%;
-    `} */
   cursor: pointer;
   &:hover {
     background-color: #5b5b5b;

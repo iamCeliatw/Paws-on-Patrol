@@ -18,7 +18,6 @@ import {
 const InviteList = () => {
   const { user } = UserAuth();
   const [inviteData, setInviteData] = useState({});
-  //   const [inviting, setInviting] = useState(false);
   const [payStatus, setPayStatus] = useState(false);
   const [paymentdata, setPaymentdata] = useState({});
   const [paymentLoading, setPaymentLoading] = useState(false);
@@ -39,7 +38,6 @@ const InviteList = () => {
     });
   };
 
-  //  實時監聽status變化
   useEffect(() => {
     const getStatus = () => {
       if (user.uid) {
@@ -56,7 +54,7 @@ const InviteList = () => {
     getStatus();
   }, [user.uid]);
 
-  //payment function
+  //payment
   const handlePayment = async (inviteData, user) => {
     if (paymentLoading) {
       return;
@@ -79,9 +77,6 @@ const InviteList = () => {
         stripe.redirectToCheckout({ sessionId: sessionId });
       });
       setPaymentLoading(false);
-      //   await updateDoc(doc(db, "invitation", user.uid), {
-      //     status: "paid",
-      //   });
     } catch (err) {
       setPaymentLoading(false);
       alert(err);
@@ -96,7 +91,6 @@ const InviteList = () => {
         );
 
         if (inviteData) {
-          //   setInviting(true);
           const querySnapshot = await getDocs(queryInvite);
           querySnapshot.forEach((doc) => {
             const data = doc.data();
@@ -191,11 +185,9 @@ const InviteList = () => {
 export default InviteList;
 
 const Container = styled.div`
-  /* overflow: scroll; */
   margin: auto;
   width: 100%;
   border-radius: 5px;
-  /* border: 1px solid #8e8e8e; ; */
 `;
 
 const Div = styled.div`
@@ -230,7 +222,6 @@ const Button = styled.div`
     height: 25px;
     border: none;
     border-radius: 20px;
-    /* box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08); */
     background-color: #aaa;
     color: white;
     &:hover {

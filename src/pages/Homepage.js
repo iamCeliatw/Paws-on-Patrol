@@ -261,9 +261,6 @@ const Homepage = () => {
       </div>
       <Login
         openLogin={openLogin}
-        closeModal={closeModal}
-        setCloseModal={setCloseModal}
-        setOpenSignup={setOpenSignup}
         setOpenLogin={setOpenLogin}
         onClose={() => {
           setOpenLogin(false);

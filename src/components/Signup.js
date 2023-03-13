@@ -85,11 +85,11 @@ const Signup = ({ onSwitch, onClose, openSignup, setOpenSignup }) => {
       </button>
       <StyledLogin>
         <div className="title">
-          <h2>Nice to meet you !</h2>
+          <h2>您好，歡迎使用</h2>
         </div>
 
         <div className="form">
-          <p>Name</p>
+          <p>姓名</p>
           <input
             onChange={(e) => {
               setSignUpName(e.target.value);
@@ -103,17 +103,17 @@ const Signup = ({ onSwitch, onClose, openSignup, setOpenSignup }) => {
             }}
             type="text"
           />
-          <p>Password</p>
+          <p>密碼</p>
           <input
             onChange={(e) => setSignUpPassword(e.target.value)}
             type="password"
           />
         </div>
-        <SignButton onClick={registerHandler}>Sign up</SignButton>
+        <SignButton onClick={registerHandler}>註冊</SignButton>
         <p className="question-text">
-          Already have account?
+          已經擁有帳號？
           <button className="changePop" onClick={onSwitch}>
-            sign in
+            點我登入
           </button>
         </p>
         {showMessage && errorMessage && (

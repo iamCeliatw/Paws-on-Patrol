@@ -66,7 +66,6 @@ const Main = () => {
             </Text>
           </Flex>
         </Card>
-        {/* <Card></Card> */}
       </Container>
       <Margin></Margin>
       <Footer />
@@ -77,7 +76,6 @@ const Main = () => {
 export default Main;
 
 const Container = styled.div`
-  /* background-color: #ffefd5; */
   margin: auto;
   overflow: hidden;
 `;
@@ -189,7 +187,6 @@ const FirstCard = styled.div`
   .img {
     overflow: hidden;
     .kamudog {
-      /* width: 300px; */
       display: block;
       ${({ theme }) => theme.media.laptop`
       width:300px;
@@ -278,14 +275,14 @@ const Flex = styled.div`
 const Gif = styled.div`
   img {
     width: 90%;
-    margin: 0 auto; /* 設定水平置中 */
+    margin: 0 auto;
     display: block;
     border-radius: 20px;
   }
 `;
 
 const Text = styled.div`
-  margin: 0 auto; /* 設定水平置中 */
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;

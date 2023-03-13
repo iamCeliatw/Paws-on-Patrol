@@ -22,18 +22,10 @@ import Footer from "../components/Footer";
 import Diary from "../components/Diary";
 import { db, storage } from "../firebase.config";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
-import {
-  collection,
-  getDocs,
-  setDoc,
-  doc,
-  updateDoc,
-  getDoc,
-} from "firebase/firestore";
+import { setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 import { UserAuth } from "../context/AuthContext";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { updateProfile } from "firebase/auth";
-import { auth } from "../firebase.config";
 
 const Account = () => {
   const [mypreview, setMyPreview] = useState("");
@@ -46,19 +38,10 @@ const Account = () => {
 
   const [dirty, setDirty] = useState(false);
   const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
-  const {
-    user,
-    marker,
-    setMarker,
-    userselectOpen,
-    setUserselectOpen,
-    openInfo,
-    setOpenInfo,
-  } = UserAuth();
+  const { user, marker, setMarker } = UserAuth();
   const [nameValue, setNameValue] = useState("");
   const [aboutMeText, setaboutMeText] = useState("");
   const [addressValue, setAddressValue] = useState("");
-  //   const [place, setPlace] = useState({});
   const [priceValue, setPriceValue] = useState("");
   //預覽
   const [preview, setPreview] = useState(null);
@@ -358,9 +341,6 @@ const Account = () => {
                     }}
                   />
                 </div>
-                {/* <button className="confirmButton" onClick={handleInputConfirm}>
-                  變更地址
-                </button> */}
                 <div>
                   <SubTitle>價格</SubTitle>
                   <input
@@ -462,7 +442,6 @@ const Account = () => {
             </Button>
           </MarginBox>
         </StyledAccount>
-
         <Footer />
       </Container>
     </>

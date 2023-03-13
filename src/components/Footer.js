@@ -12,7 +12,7 @@ const Footer = () => {
 export default Footer;
 
 const StyledFooter = styled.div`
-  height: 50px; /*設定footer本身高度*/
+  height: 50px;
   background-color: ${({ theme }) => theme.colors.background};
   line-height: 50px;
   text-align: center;

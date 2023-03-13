@@ -149,10 +149,6 @@ export const StyledLeftSideBar = styled.div`
   }
 `;
 
-// opacity: ${(props) => (props.isActive ? 1 : 0)};
-// transform: translateX(${(props) => (props.isActive ? "-5%" : 0)});
-// transition: all 0.5s ease-in-out;
-// background-color: rgba(255, 255, 255, ${(props) => (props.isActive ? 1 : 0)});
 export const Container = styled.div`
   padding: 20px;
   ${({ theme }) => theme.media.tablet`
@@ -190,7 +186,6 @@ export const Container = styled.div`
     height: 30px;
     border: none;
     border-radius: 20px;
-    /* box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08); */
     background-color: #aaa;
     color: white;
     &:hover {
@@ -208,7 +203,6 @@ export const Container = styled.div`
     }
     .range {
       cursor: pointer;
-      /* width: 80%; */
       height: 14px;
       -webkit-appearance: none;
       background: #ffffff;
@@ -216,10 +210,8 @@ export const Container = styled.div`
       border-radius: 15px;
       overflow: hidden;
     }
-    /* 滑動軌道 樣式 */
     .range::-webkit-slider-runnable-track {
       height: 8px;
-      /* width: 280px; */
       border-radius: 4px;
       background: #aaa;
     }
@@ -276,8 +268,6 @@ export const Container = styled.div`
    `}
       &:hover {
         cursor: default;
-        /* color: #ffffff; */
-        /* background-color: ${({ theme }) => theme.colors.gray}; */
       }
     }
   }
@@ -290,7 +280,6 @@ export const Container = styled.div`
     height: 20px;
     border: none;
     border-radius: 20px;
-    /* box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08); */
     background-color: #aaa;
     color: white;
     &:hover {
