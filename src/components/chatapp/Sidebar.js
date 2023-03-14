@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import Navbar from "./Navbar";
-import Search from "./Search";
 import Chats from "./Chats";
 const Sidebar = () => {
   return (
     <Container>
       <Navbar />
-      {/* <Search /> */}
       <Chats />
     </Container>
   );

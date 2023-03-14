@@ -26,7 +26,7 @@ const InviteHistory = () => {
         const timestamp = data.dateTime;
         const date = new Date(
           timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
-        ); // 將時間戳記轉換為Date物件
+        );
 
         setHistory((prev) => [...prev, { ...data, date }]);
         setOrderList((prev) => [...prev, doc.id]);

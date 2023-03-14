@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserAuth } from "../../context/AuthContext";
 import { ChatAuth } from "../../context/ChatContext";
-import { UserChat, UserChatInfo } from "./Search";
 import { db } from "../../firebase.config";
 const Chats = () => {
   const [chats, setChats] = useState({});

@@ -12,23 +12,21 @@ const NannyHistory = () => {
     getHistory();
   }, [user, user.uid]);
 
-  //待做： 監聽status狀態變化 更新頁面
-
   const getHistory = async () => {
     if (user.uid) {
       const queryHistory = query(
         collection(db, "clientHistory"),
         where("userId", "==", user.uid)
       );
-      //   console.log(user.uid);
+
       const querySnapshot = await getDocs(queryHistory);
-      //   console.log(querySnapshot);
+
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const timestamp = data.dateTime;
         const date = new Date(
           timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
-        ); // 將時間戳記轉換為Date物件
+        );
         setHistory((prev) => [...prev, { ...data, date }]);
         setOrderList((prev) => [...prev, doc.id]);
       });

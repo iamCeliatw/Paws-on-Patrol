@@ -39,10 +39,6 @@ const Diary = ({
     setDirty(true);
   };
 
-  //   useEffect(() => {
-  //     getDiaryURL(imgElement, i);
-  //   }, []);
-
   useEffect(() => {
     if (diaryLoad) {
       const reader = new FileReader();
@@ -51,7 +47,6 @@ const Diary = ({
       };
       reader.readAsDataURL(diaryLoad);
     }
-    // console.log(diaryLoad);
   }, [diaryLoad]);
 
   const getFile = async (e) => {
@@ -73,7 +68,6 @@ const Diary = ({
 
   const getDiaryURL = (imageElement, i) => {
     let imageName = diaries[i]["photo"];
-    // console.log(imageName);
     if (imageName) {
       getDownloadURL(ref(storage, `${uid}/${imageName}`))
         .then((url) => {
@@ -157,10 +151,6 @@ const StyledDiv = styled.div`
     text-align: center;
  `}
 
-  .diary-img {
-    /* width: 40%; */
-  }
-
   .upload_cover {
     margin-top: 25px;
     width: 100%;
@@ -172,15 +162,12 @@ const StyledDiv = styled.div`
     justify-content: center;
     position: relative;
     cursor: pointer;
-    /* ${({ theme }) => theme.media.laptop`
-    width: 80%;`} */
   }
   .diaryImg {
     border-radius: 10px;
     object-fit: cover;
     width: 200px;
     height: 200px;
-    /* aspect-ratio: 3/2; */
   }
 
   .plus_icon {
@@ -235,7 +222,6 @@ const DiaryTextArea = styled.textarea`
   margin: 0 0 10px 0;
   width: 100%;
   padding: 5px;
-  /* aspect-ratio: 3/1; */
   white-space: pre-wrap;
   resize: none;
   border: none;

@@ -2,18 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Nav from "../components/Nav";
-import { onSnapshot } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { User, UserAuth } from "../context/AuthContext";
 import { ChatAuth } from "../context/ChatContext";
-import {
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  deleteDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import Footer from "../components/Footer";
 import { SaveButton } from "../styles/Account.styled";
 const Reserve = () => {
@@ -268,7 +260,6 @@ const StyledDiv = styled.div`
     p {
       line-height: 25px;
       margin: 10px 0;
-      /* color: #4c4c4c; */
     }
   }
   .profileImg {
@@ -347,7 +338,6 @@ const InviteBox = styled.div`
     height: 30px;
     border: none;
     border-radius: 20px;
-    /* box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08); */
     background-color: #aaa;
     color: white;
     &:hover {

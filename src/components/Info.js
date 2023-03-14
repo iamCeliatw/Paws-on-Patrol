@@ -39,7 +39,6 @@ const Info = () => {
     updateDoc(doc(db, "invitation", user.uid), {
       status: "denied",
     });
-    // await deleteDoc(doc(db, "invitation", user.uid));
     setInviteData("");
   };
 
@@ -175,7 +174,6 @@ const Button = styled.button`
   cursor: pointer;
   &:hover {
     color: #ffffff;
-    /* border: 1px solid #505050; */
     background-color: none;
   }
 `;

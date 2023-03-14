@@ -32,11 +32,6 @@ const NannyList = ({ setOpenInform, openInform }) => {
       return () => {
         unsubscribe();
       };
-      // const querySnapshot = await getDocs(queryInvite);
-      // querySnapshot.forEach((doc) => {
-      //   const data = doc.data();
-      //   setClientList((prev) => [...prev, data]);
-      // });
     }
   }, [user.uid]);
 
@@ -64,7 +59,6 @@ const NannyList = ({ setOpenInform, openInform }) => {
       userPhotoURL: user.photoURL,
       amount: clientList[index]["price"],
       paymentStatus: "pending",
-      //   orderId: orderId,
       dateTime: serverTimestamp(),
     });
     await setDoc(doc(db, "inviteHistory", docId), {
@@ -76,7 +70,6 @@ const NannyList = ({ setOpenInform, openInform }) => {
       invitePhotoURL: user.photoURL,
       amount: clientList[index]["price"],
       paymentStatus: "pending",
-      //   orderId: orderId,
       dateTime: serverTimestamp(),
     });
   };
