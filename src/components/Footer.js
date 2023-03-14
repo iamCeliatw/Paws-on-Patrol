@@ -13,7 +13,8 @@ export default Footer;
 
 const StyledFooter = styled.div`
   height: 50px;
-  background-color: ${({ theme }) => theme.colors.background};
+
+  background-color: rgba(255, 255, 255, 0.9);
   line-height: 50px;
   text-align: center;
   margin-top: -50px;

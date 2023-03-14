@@ -65,11 +65,6 @@ const Nav = ({ setOpenSignup, setOpenLogin, setCloseModal }) => {
     }
   };
 
-  //防止點擊過快造成的過度渲染
-  // const handleOpenInfo = debounce(() => {
-  //   setOpenInfo(!openInfo);
-  // }, 200);
-
   return (
     <>
       {userselectOpen && (
@@ -116,12 +111,7 @@ const Nav = ({ setOpenSignup, setOpenLogin, setCloseModal }) => {
             )}
             {bellMessage && <i className="unread-point"></i>}
             <div>
-              <div>
-                {/* <HiOutlineBell className="icon" onClick={handleOpenInfo} /> */}
-                {/* {bellMessage && <i className="unread-point"></i>} */}
-              </div>
-
-              {/* <CiBellOn className="icon" onClick={handleOpenInfo} /> */}
+              <div></div>
             </div>
           </Flex>
         </NavFlex>
