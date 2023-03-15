@@ -15,11 +15,22 @@ module.exports = {
       { presets: ["@babel/preset-env", "@babel/preset-react"] },
     ],
   },
+  transformIgnorePatterns: ["node_modules/(?!(firebase|@firebase/firestore)/)"],
+
+  globals: {
+    "babel-jest": {
+      babelrc: false,
+      configFile: false,
+      config: {
+        presets: ["@babel/preset-env", "@babel/preset-react"],
+      },
+    },
+  },
   testEnvironment: "jest-environment-jsdom",
   moduleFileExtensions: ["js", "jsx", "json", "node"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
   collectCoverage: true,
-  transformIgnorePatterns: ["/node_modules/"],
+  //   transformIgnorePatterns: ["/node_modules/"],
 };

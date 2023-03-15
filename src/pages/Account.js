@@ -37,7 +37,7 @@ const Account = () => {
   const [tagInputValue, setTagInputValue] = useState("");
 
   const [dirty, setDirty] = useState(false);
-
+  const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
   const { user, marker, setMarker } = UserAuth();
   const [nameValue, setNameValue] = useState("");
   const [aboutMeText, setaboutMeText] = useState("");

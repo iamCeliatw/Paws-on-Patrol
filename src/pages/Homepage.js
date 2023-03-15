@@ -33,7 +33,7 @@ const Homepage = () => {
     UserAuth();
 
   const [openFilterBar, setOpenFilterBar] = useState(false);
-
+  const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
   const mapId = ["df9fc52cd73ef254"];
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: ApiKey,
