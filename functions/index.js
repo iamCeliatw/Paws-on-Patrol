@@ -34,7 +34,7 @@ exports.createStripeCheckout = functions.https.onCall(async (data, context) => {
     id: session.id,
   };
 });
-
+//接收stripe webhook請求
 exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
   const stripe = require("stripe")(functions.config().stripe.secret_key);
   let event;
