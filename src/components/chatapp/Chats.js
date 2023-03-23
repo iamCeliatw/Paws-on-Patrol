@@ -59,3 +59,30 @@ const Container = styled.div`
   height: calc(100% - 50px);
   overflow: scroll;
 `;
+const UserChat = styled.div`
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: #f5ebe0;
+  }
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+`;
+const UserChatInfo = styled.div`
+  span {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  p {
+    font-size: 14px;
+    color: lightgray;
+  }
+`;

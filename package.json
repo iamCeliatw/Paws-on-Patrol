@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "dev": "webpack serve",
-    "test": "jest"
+    "test": "jest --transformIgnorePatterns '/node_modules/(?!(@firebase)/)'"
   },
   "keywords": [],
   "author": "Celia Chang",
@@ -22,6 +22,7 @@
     "@testing-library/user-event": "^14.4.3",
     "babel-jest": "^29.5.0",
     "babel-loader": "^9.1.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "css-loader": "^6.7.3",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
@@ -41,6 +42,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.21.2",
     "@react-google-maps/api": "^2.17.1",
     "@react-query-firebase/functions": "^1.0.0-dev.1",
     "@stripe/react-stripe-js": "^1.16.4",

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useImperativeHandle } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";

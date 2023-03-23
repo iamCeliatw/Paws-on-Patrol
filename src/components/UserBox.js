@@ -54,8 +54,6 @@ const UserBox = ({
         </div>
         <p>{userName}</p>
         <TagDiv>
-          {/* icon */}
-
           {usertags &&
             usertags.map((tag, index) => {
               return <Keyword key={index}>{tag}</Keyword>;

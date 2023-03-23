@@ -37,7 +37,7 @@ const Account = () => {
   const [tagInputValue, setTagInputValue] = useState("");
 
   const [dirty, setDirty] = useState(false);
-
+  const ApiKey = "AIzaSyDPJLtuEnn3M599D5xRBzcuWfNidrXffI8";
   const { user, marker, setMarker } = UserAuth();
   const [nameValue, setNameValue] = useState("");
   const [aboutMeText, setaboutMeText] = useState("");
@@ -333,7 +333,7 @@ const Account = () => {
                     id="addressValue"
                     type="text"
                     placeholder={
-                      getAddress ? "取得中..." : "輸入完成請按變更地址"
+                      getAddress ? "取得中..." : "請輸入可提供服務的詳細地址"
                     }
                     onChange={(e) => {
                       setAddressValue(e.target.value);

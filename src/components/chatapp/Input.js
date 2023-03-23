@@ -1,21 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import {
-  doc,
-  updateDoc,
-  arrayUnion,
-  Timestamp,
-  serverTimestamp,
-} from "firebase/firestore";
-import { MdAttachFile, MdOutlineAddPhotoAlternate } from "react-icons/md";
-import { v4 as uuid } from "uuid";
-import { db } from "../../firebase.config";
 import { ChatAuth } from "../../context/ChatContext";
 import { UserAuth } from "../../context/AuthContext";
 
 const Input = () => {
   const { data } = ChatAuth();
-  const { user, text, setText, handleSend } = UserAuth();
+  const { text, setText, handleSend } = UserAuth();
   return (
     <Container>
       <input

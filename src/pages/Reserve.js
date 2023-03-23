@@ -81,14 +81,11 @@ const Reserve = () => {
       const docRef = doc(db, "user", id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        //for page data
         setMemberData(docSnap.data());
-        //for chat room function
         setSearchUser(docSnap.data());
         setDiaries(docSnap.data().diary);
         setTags(docSnap.data().tags);
       } else {
-        // doc.data() will be undefined in this case
         console.log("No such document!");
       }
     };
