@@ -37,6 +37,7 @@ const Account = () => {
   const [tagInputValue, setTagInputValue] = useState("");
 
   const [dirty, setDirty] = useState(false);
+
   const { user, marker, setMarker } = UserAuth();
   const [nameValue, setNameValue] = useState("");
   const [aboutMeText, setaboutMeText] = useState("");
