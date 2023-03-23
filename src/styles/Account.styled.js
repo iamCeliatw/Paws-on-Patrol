@@ -133,7 +133,6 @@ export const StyledDiv = styled.div`
     font-size: 13px;
     vertical-align: top;
     box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
-    /* filter: drop-shadow(0px 0px 2px rgba(15, 15, 51, 0.4)); */
     cursor: pointer;
     &:hover {
       background-color: #ffffffac;
@@ -260,7 +259,6 @@ export const Button = styled.div`
     font-size: 15px;
     border-radius: 30px;
     box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
-    /* filter: drop-shadow(0px 0px 2px rgba(15, 15, 51, 0.4)); */
     cursor: pointer;
     &:hover {
       background-color: #5b5b5b;

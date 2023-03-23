@@ -21,7 +21,6 @@ const Success = () => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setSearchUser(docSnap.data().toUser);
-          // do something
         }
       }
     };

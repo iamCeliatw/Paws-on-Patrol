@@ -286,7 +286,6 @@ const Text = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* width: 50%; */
   text-align: center;
   h3 {
     margin-bottom: 20px;

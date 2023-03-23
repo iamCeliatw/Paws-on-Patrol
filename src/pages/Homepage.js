@@ -47,7 +47,6 @@ const Homepage = () => {
     setPriceValue(event.target.value);
   };
 
-  //   根據填入地址 定位經緯度
   const locationHandler = async () => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -67,7 +66,6 @@ const Homepage = () => {
     });
   };
 
-  //取得現在位置
   useEffect(() => {
     const getCurrentPosition = () => {
       navigator.geolocation.getCurrentPosition(
@@ -106,7 +104,7 @@ const Homepage = () => {
     const getAllLocation = async () => {
       const querySnapshot = await getDocs(collection(db, "user"));
       const data = [];
-      const newMarkers = []; // 儲存符合條件的 markers
+      const newMarkers = [];
       if (user) {
         querySnapshot.forEach((doc) => {
           if (
@@ -140,7 +138,7 @@ const Homepage = () => {
         });
       }
       if (!km) {
-        setMarkers(newMarkers); // 更新 markers 狀態
+        setMarkers(newMarkers);
       } else {
         setMarkers(filterUsers(newMarkers, km, priceValue));
       }
@@ -151,7 +149,6 @@ const Homepage = () => {
 
   const filterUsers = (newMarkers, km, priceValue) => {
     return newMarkers.filter((marker) => {
-      // 計算用戶與當前位置的距離
       const userLocation = new window.google.maps.LatLng(
         marker.lat,
         marker.lng

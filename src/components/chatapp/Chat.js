@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { SiContactlesspayment } from "react-icons/si";
 import Messages from "./Messages";
 import Input from "./Input";
 import { ChatAuth } from "../../context/ChatContext";
-import { loadStripe } from "@stripe/stripe-js";
-import { functions, createStripeCheckout } from "../../firebase.config";
 
 const Chat = () => {
   const { data } = ChatAuth();

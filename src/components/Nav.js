@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserAuth } from "../context/AuthContext";
 import { db } from "../firebase.config";
-import { HiOutlineBell } from "react-icons/hi2";
 import {
   getDoc,
   doc,
@@ -12,9 +11,7 @@ import {
   collection,
   where,
 } from "firebase/firestore";
-import { debounce } from "lodash";
 import UserSelect from "../components/UserSelect";
-import Info from "../components/Info";
 const Nav = ({ setOpenSignup, setOpenLogin, setCloseModal }) => {
   const {
     bellMessage,

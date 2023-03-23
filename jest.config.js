@@ -6,16 +6,22 @@
 module.exports = {
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
-
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"],
   transform: {
-    "^.+\\.[jt]sx?$": [
+    "^.+\\.jsx?$": [
       "babel-jest",
-      { presets: ["@babel/preset-env", "@babel/preset-react"] },
+      {
+        presets: ["@babel/preset-env", "@babel/preset-react"],
+        plugins: ["@babel/plugin-transform-modules-commonjs"],
+      },
     ],
   },
-  transformIgnorePatterns: ["node_modules/(?!(firebase|@firebase/firestore)/)"],
+  transformIgnorePatterns: [
+    "/node_modules/(?!(firebase|@firebase/firestore)/)",
+  ],
+
+  //   transformIgnorePatterns: ["node_modules/(?!(firebase|@firebase/firestore)/)"],
 
   globals: {
     "babel-jest": {
@@ -26,11 +32,11 @@ module.exports = {
       },
     },
   },
+
   testEnvironment: "jest-environment-jsdom",
   moduleFileExtensions: ["js", "jsx", "json", "node"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
-  collectCoverage: true,
-  //   transformIgnorePatterns: ["/node_modules/"],
+  modulePathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/build/"],
 };

@@ -11,7 +11,6 @@ const Message = ({ message }) => {
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
-  console.log(user.photoURL);
   return (
     <Container
       ref={ref}
@@ -26,11 +25,9 @@ const Message = ({ message }) => {
           }
           alt=""
         />
-        {/* <span>just Now</span> */}
       </MessageInfo>
       <MessageContent className="messageContent">
         <p>{message.text}</p>
-        {/* {message.img && <img src={message.img} alt="" />} */}
       </MessageContent>
     </Container>
   );
