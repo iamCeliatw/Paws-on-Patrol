@@ -317,7 +317,7 @@ const Alert = styled.div`
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 3;
+  z-index: 5;
   width: 300px;
   background-color: #c1c1c1;
   color: #ffffff;
